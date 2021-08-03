@@ -78,21 +78,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJM-OB-8dZ">
-                                <rect key="frame" x="347" y="20" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4k-Y4-zeD">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <items>
+                                    <navigationItem title="Manage Accounts" largeTitleDisplayMode="never" id="fMU-nw-y9a">
+                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="j4P-hp-8NJ">
+                                            <connections>
+                                                <segue destination="2iE-c9-UuT" kind="unwind" unwindAction="unwindFromUserDetailsViewControllerWithUnwindSegue:" id="vU4-XH-YlG"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhb-yg-ydG">
+                                <rect key="frame" x="142.5" y="406" width="129" height="30"/>
+                                <state key="normal" title="Connect to Spotify"/>
                                 <connections>
-                                    <segue destination="2iE-c9-UuT" kind="unwind" unwindAction="unwindFromUserDetailsViewControllerWithUnwindSegue:" id="cod-Qg-V2y"/>
+                                    <action selector="connectToSpotifyButtonPressed" destination="Qh7-8p-0hu" eventType="touchUpInside" id="rHY-cP-RCD"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4dj-YL-lFS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="4dj-YL-lFS" firstAttribute="trailing" secondItem="oJM-OB-8dZ" secondAttribute="trailing" constant="19" id="JiE-8i-pRo"/>
-                            <constraint firstItem="oJM-OB-8dZ" firstAttribute="top" secondItem="4dj-YL-lFS" secondAttribute="top" constant="20" id="SV8-gw-uFR"/>
+                            <constraint firstItem="hhb-yg-ydG" firstAttribute="centerY" secondItem="RAL-mv-E5V" secondAttribute="centerY" id="EDW-Ka-Yfg"/>
+                            <constraint firstItem="l4k-Y4-zeD" firstAttribute="trailing" secondItem="4dj-YL-lFS" secondAttribute="trailing" id="Tsw-hU-BKM"/>
+                            <constraint firstItem="l4k-Y4-zeD" firstAttribute="top" secondItem="4dj-YL-lFS" secondAttribute="top" id="Vtp-CN-rcW"/>
+                            <constraint firstItem="hhb-yg-ydG" firstAttribute="centerX" secondItem="RAL-mv-E5V" secondAttribute="centerX" id="dJn-fF-ULI"/>
+                            <constraint firstItem="l4k-Y4-zeD" firstAttribute="leading" secondItem="4dj-YL-lFS" secondAttribute="leading" id="oad-jc-iWH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="connectToSpotifyButton" destination="hhb-yg-ydG" id="lHF-5K-4st"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFj-8f-OfR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2iE-c9-UuT" userLabel="Exit" sceneMemberID="exit"/>
@@ -178,6 +196,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZSC-jx-zSb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RjL-Z6-lLE">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
