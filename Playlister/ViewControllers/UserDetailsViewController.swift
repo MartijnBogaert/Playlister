@@ -20,9 +20,14 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
     }
 
     @IBAction func connectToSpotifyButtonPressed() {
-        safariViewController = SFSafariViewController(url: SpotifyAuthorizationRequest().url)
-        safariViewController!.delegate = self
-        present(safariViewController!, animated: true)
+        if let tokens = Storage.shared.spotifyTokens, tokens.accessTokenIsValid() {
+            Storage.shared.removeByKey(Storage.Keys.spotifyTokens)
+            updateUI()
+        } else {
+            safariViewController = SFSafariViewController(url: SpotifyAuthorizationRequest().url)
+            safariViewController!.delegate = self
+            present(safariViewController!, animated: true)
+        }
     }
     
     func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
@@ -48,11 +53,9 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
     
     func updateUI() {
         if let tokens = Storage.shared.spotifyTokens, tokens.accessTokenIsValid() {
-            connectToSpotifyButton.setTitle("Connected to Spotify", for: .normal)
-            connectToSpotifyButton.isEnabled = false
+            connectToSpotifyButton.setTitle("Disconnect from Spotify", for: .normal)
         } else {
             connectToSpotifyButton.setTitle("Connect to Spotify", for: .normal)
-            connectToSpotifyButton.isEnabled = true
         }
     }
 }
