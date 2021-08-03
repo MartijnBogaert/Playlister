@@ -14,7 +14,7 @@ struct Storage {
         static let spotifyTokens = "spotifyTokens"
     }
     
-    var spotifyTokens: SpotifyTokens? {
+    var spotifyTokens: SpotifyTokensStorage? {
         get {
             unarchiveJSON(key: Keys.spotifyTokens) ?? nil
         }
@@ -30,11 +30,16 @@ struct Storage {
         let string = String(data: data, encoding: .utf8)
         UserDefaults.standard.set(string, forKey: key)
     }
+
     
     private func unarchiveJSON<T: Decodable>(key: String) -> T? {
         guard let string = UserDefaults.standard.string(forKey: key), let data = string.data(using: .utf8) else {
             return nil
         }
         return try! JSONDecoder().decode(T.self, from: data)
+    }
+    
+    func removeByKey(_ key: String) {
+        UserDefaults.standard.removeObject(forKey: key)
     }
 }

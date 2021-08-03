@@ -14,6 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Refresh Spotify Access Token if necessary/possible
+        if let tokens = Storage.shared.spotifyTokens, !tokens.accessTokenIsValid(), let refreshToken = tokens.refreshToken {
+            SpotifyAccessTokenRequest(refreshToken: refreshToken).send { result in
+                if case .success(let response) = result {
+                    Storage.shared.spotifyTokens = SpotifyTokensStorage(
+                        accessToken: response.accessToken,
+                        refreshToken: refreshToken,
+                        accessTokenExpiresIn: response.accessTokenExpiresIn
+                    )
+                } else {
+                    Storage.shared.removeByKey(Storage.Keys.spotifyTokens)
+                }
+            }
+        }
+        
         return true
     }
 

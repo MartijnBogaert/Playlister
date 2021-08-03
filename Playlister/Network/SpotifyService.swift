@@ -28,8 +28,8 @@ struct SpotifyAuthorizationRequest: APIRequest {
     }
 }
 
-struct SpotifyAccessTokenRequest: APIRequest {
-    typealias Response = SpotifyTokens
+struct SpotifyTokensRequest: APIRequest {
+    typealias Response = SpotifyTokensResponse
     
     var code: String
     
@@ -41,6 +41,37 @@ struct SpotifyAccessTokenRequest: APIRequest {
         queryItems.append(URLQueryItem(name: "grant_type", value: "authorization_code"))
         queryItems.append(URLQueryItem(name: "code", value: code))
         queryItems.append(URLQueryItem(name: "redirect_uri", value: redirectURI))
+        
+        return queryItems
+    }
+    
+    var request: URLRequest {
+        let authorizationString = "\(clientId):\(clientSecret)"
+            .data(using: .utf8)?
+            .base64EncodedString()
+        
+        var request = URLRequest(url: url)
+        
+        request.addValue("Basic \(authorizationString ?? "")", forHTTPHeaderField: "Authorization")
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        return request
+    }
+}
+
+struct SpotifyAccessTokenRequest: APIRequest {
+    typealias Response = SpotifyAccessTokenResponse
+    
+    var refreshToken: String
+    
+    var host: String { "accounts.spotify.com" }
+    var path: String { "/api/token" }
+    var queryItems: [URLQueryItem]? {
+        var queryItems: [URLQueryItem] = []
+        
+        queryItems.append(URLQueryItem(name: "grant_type", value: "refresh_token"))
+        queryItems.append(URLQueryItem(name: "refresh_token", value: refreshToken))
         
         return queryItems
     }
