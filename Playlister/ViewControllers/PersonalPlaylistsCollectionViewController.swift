@@ -39,7 +39,6 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
     }
     
     func update() {
-        print("update")
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPersonalPlaylistsRequest(accessToken: token).send { result in
                 switch result {
@@ -53,6 +52,9 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
                     self.updateCollectionView()
                 }
             }
+        } else {
+            model.spotifyPlaylists = []
+            updateCollectionView()
         }
     }
     
@@ -112,6 +114,8 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
         }
     }
 
-    @IBAction func unwindFromUserDetailsViewController(unwindSegue: UIStoryboardSegue) { }
+    @IBAction func unwindFromUserDetailsViewController(unwindSegue: UIStoryboardSegue) {
+        update()
+    }
     
 }
