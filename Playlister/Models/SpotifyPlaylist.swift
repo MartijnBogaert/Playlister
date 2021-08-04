@@ -27,6 +27,16 @@ extension SpotifyPlaylist: Codable {
     }
 }
 
+extension SpotifyPlaylist: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: SpotifyPlaylist, rhs: SpotifyPlaylist) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 // MARK: SpotifyPagingObject
 
 struct SpotifyPagingObject {
@@ -49,6 +59,8 @@ struct SpotifyPlaylistTracksRefObject {
 
 extension SpotifyPlaylistTracksRefObject: Codable { }
 
+extension SpotifyPlaylistTracksRefObject: Hashable { }
+
 // MARK: SpotifyImageObject
 
 struct SpotifyImageObject {
@@ -58,5 +70,7 @@ struct SpotifyImageObject {
 }
 
 extension SpotifyImageObject: Codable { }
+
+extension SpotifyImageObject: Hashable { }
 
 
