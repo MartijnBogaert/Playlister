@@ -114,6 +114,19 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
             }
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            // let item = self.dataSource.itemIdentifier(for: indexPath)!
+            
+            let saveToggle = UIAction(title: "Save Playlist", image: UIImage(systemName: "square.and.arrow.down")) { action in
+                // perform action
+                //self.updateCollectionView()
+            }
+            
+            return UIMenu(children: [saveToggle])
+        }
+    }
 
     @IBAction func unwindFromUserDetailsViewController(unwindSegue: UIStoryboardSegue) {
         update()
