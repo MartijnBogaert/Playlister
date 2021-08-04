@@ -90,3 +90,22 @@ struct SpotifyAccessTokenRequest: APIRequest {
         return request
     }
 }
+
+
+struct SpotifyPersonalPlaylistsRequest: APIRequest {
+    typealias Response = SpotifyPagingObject
+    
+    var accessToken: String
+    
+    var host: String { "api.spotify.com" }
+    var path: String { "/v1/me/playlists" }
+    var queryItems: [URLQueryItem]? { [URLQueryItem(name: "limit", value: "50")] }
+    
+    var request: URLRequest {
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        return request
+    }
+}

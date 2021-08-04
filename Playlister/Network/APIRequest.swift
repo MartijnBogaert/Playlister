@@ -69,3 +69,24 @@ extension APIRequest where Response: Decodable {
         }.resume()
     }
 }
+
+extension APIRequest {
+    func sendForDebugging(completion: @escaping (String) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, urlResponse, error in
+            if let urlResponse = urlResponse {
+                print("URL Response: \(urlResponse)")
+            }
+            
+            if let data = data {
+                print("Data: \(data)")
+                completion(String(data: data, encoding: .utf8) ?? "Data couldn't be decoded")
+            } else if let error = error {
+                print("Error: \(error)")
+                completion(error.localizedDescription)
+            } else {
+                print("Not clear what happened")
+                completion("Not clear what happened")
+            }
+        }.resume()
+    }
+}

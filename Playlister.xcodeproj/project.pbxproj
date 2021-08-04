@@ -22,6 +22,7 @@
 		E33EEFB526B9424400D0C600 /* SpotifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFB426B9424400D0C600 /* SpotifyService.swift */; };
 		E33EEFB826B96DBC00D0C600 /* SpotifyTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFB726B96DBC00D0C600 /* SpotifyTokens.swift */; };
 		E33EEFBB26B97B4C00D0C600 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFBA26B97B4C00D0C600 /* Storage.swift */; };
+		E33EEFBF26B9D03000D0C600 /* SpotifyPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFBE26B9D03000D0C600 /* SpotifyPlaylist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		E33EEFB426B9424400D0C600 /* SpotifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyService.swift; sourceTree = "<group>"; };
 		E33EEFB726B96DBC00D0C600 /* SpotifyTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTokens.swift; sourceTree = "<group>"; };
 		E33EEFBA26B97B4C00D0C600 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		E33EEFBE26B9D03000D0C600 /* SpotifyPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyPlaylist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				E33EEFB726B96DBC00D0C600 /* SpotifyTokens.swift */,
+				E33EEFBE26B9D03000D0C600 /* SpotifyPlaylist.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E33EEFBF26B9D03000D0C600 /* SpotifyPlaylist.swift in Sources */,
 				E30CADCA26B7E1A3008B4B53 /* AppDelegate.swift in Sources */,
 				E33EEFB326B93A1700D0C600 /* APIRequest.swift in Sources */,
 				E30CADFB26B7F357008B4B53 /* PersonalPlaylistsCollectionViewController.swift in Sources */,
