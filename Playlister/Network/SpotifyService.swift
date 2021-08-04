@@ -5,7 +5,7 @@
 //  Created by Martijn Bogaert on 03/08/2021.
 //
 
-import Foundation
+import UIKit
 
 private let clientId = "5d5fa918fe334462b607122c264f8686"
 private let clientSecret = "0f183b42d68e4b7f8a9f4f44e89953f5"
@@ -108,4 +108,18 @@ struct SpotifyPersonalPlaylistsRequest: APIRequest {
         
         return request
     }
+}
+
+struct SpotifyImageRequest: APIRequest {
+    typealias Response = UIImage
+    
+    init?(fromURL urlString: String) {
+        guard let url = URLComponents(string: urlString) else { return nil }
+        self.url = url
+    }
+    
+    var url: URLComponents
+    
+    var host: String { url.host ?? "mosaic.scdn.co" }
+    var path: String { url.path }
 }

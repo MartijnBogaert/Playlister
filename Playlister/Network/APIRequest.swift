@@ -5,7 +5,7 @@
 //  Created by Martijn Bogaert on 03/08/2021.
 //
 
-import Foundation
+import UIKit
 
 protocol APIRequest {
     associatedtype Response
@@ -86,6 +86,25 @@ extension APIRequest {
             } else {
                 print("Not clear what happened")
                 completion("Not clear what happened")
+            }
+        }.resume()
+    }
+}
+
+enum ImageRequestError: Error {
+    case couldNotInitializeFromData
+}
+
+// SOURCE: https://books.apple.com/be/book/develop-in-swift-data-collections/id1556365920
+extension APIRequest where Response == UIImage {
+    func send(completion: @escaping (Result<Response, Error>) -> Void) {
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let data = data, let image = UIImage(data: data) {
+                completion(.success(image))
+            } else if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.failure(ImageRequestError.couldNotInitializeFromData))
             }
         }.resume()
     }
