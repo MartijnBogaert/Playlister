@@ -74,6 +74,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
             
             if case .spotifyPlaylist(let playlist) = item {
                 cell.titleLabel.text = playlist.name
+                cell.coverImageView.image = UIImage(systemName: "music.note.list")
                 
                 if playlist.images.count > 0 {
                     let spotifyImage = playlist.images.first(where: { $0.height == 300 }) ?? playlist.images.first!
