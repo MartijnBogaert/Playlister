@@ -43,7 +43,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
             SpotifyPersonalPlaylistsRequest(accessToken: token).send { result in
                 switch result {
                 case .success(let spotifyPagingObject):
-                    self.model.spotifyPlaylists = spotifyPagingObject.playlists
+                    self.model.spotifyPlaylists = spotifyPagingObject.items
                 case .failure:
                     self.model.spotifyPlaylists = []
                 }
@@ -132,4 +132,17 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
         update()
     }
     
+    @IBSegueAction func showPlaylistDetails(_ coder: NSCoder, sender: UICollectionViewCell?) -> PlaylistDetailsViewController? {
+        guard
+            let cell = sender,
+            let indexPath = collectionView.indexPath(for: cell),
+            let item = dataSource.itemIdentifier(for: indexPath)
+        else { return nil }
+        
+        switch item {
+        case .spotifyPlaylist(let spotifyPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: spotifyPlaylist.convertToPlaylist())
+        }
+        
+    }
 }

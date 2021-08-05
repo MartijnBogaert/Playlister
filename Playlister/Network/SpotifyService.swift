@@ -93,7 +93,7 @@ struct SpotifyAccessTokenRequest: APIRequest {
 
 
 struct SpotifyPersonalPlaylistsRequest: APIRequest {
-    typealias Response = SpotifyPagingObject
+    typealias Response = SpotifyPagingObject<SpotifyPlaylist>
     
     var accessToken: String
     
@@ -122,4 +122,30 @@ struct SpotifyImageRequest: APIRequest {
     
     var host: String { url.host ?? "mosaic.scdn.co" }
     var path: String { url.path }
+}
+
+struct SpotifyPlaylistTracksRequest: APIRequest {
+    typealias Response = [SpotifyPagingObject<SpotifyTrack>]
+    
+    var playlistId: String
+    var accessToken: String
+    
+    var host: String { "api.spotify.com" }
+    var path: String { "/v1/playlists/\(playlistId)/tracks" }
+    var queryItems: [URLQueryItem]? {
+        var queryItems: [URLQueryItem] = []
+        
+        queryItems.append(URLQueryItem(name: "market", value: "from_token"))
+        queryItems.append(URLQueryItem(name: "fields", value: "next,items.track(id,name,artists(name))"))
+        
+        return queryItems
+    }
+    
+    var request: URLRequest {
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        return request
+    }
 }

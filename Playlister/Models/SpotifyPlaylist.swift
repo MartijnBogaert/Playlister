@@ -13,7 +13,6 @@ struct SpotifyPlaylist {
     let id: String
     let name: String
     let snapshotId: String
-    let tracks: SpotifyPlaylistTracksRefObject
     let images: [SpotifyImageObject]
 }
 
@@ -22,7 +21,6 @@ extension SpotifyPlaylist: Codable {
         case id
         case name
         case snapshotId = "snapshot_id"
-        case tracks
         case images
     }
 }
@@ -37,29 +35,11 @@ extension SpotifyPlaylist: Hashable {
     }
 }
 
-// MARK: SpotifyPagingObject
-
-struct SpotifyPagingObject {
-    let playlists: [SpotifyPlaylist]
-    let URLNextPage: String?
-}
-
-extension SpotifyPagingObject: Codable {
-    enum CodingKeys: String, CodingKey {
-        case playlists = "items"
-        case URLNextPage = "next"
+extension SpotifyPlaylist {
+    func convertToPlaylist() -> Playlist {
+        return Playlist(spotifyId: id, name: name, spotifySnapshotId: snapshotId)
     }
 }
-
-// MARK: SpotifyPlaylistTracksRefObject
-
-struct SpotifyPlaylistTracksRefObject {
-    let href: String
-}
-
-extension SpotifyPlaylistTracksRefObject: Codable { }
-
-extension SpotifyPlaylistTracksRefObject: Hashable { }
 
 // MARK: SpotifyImageObject
 

@@ -98,7 +98,7 @@
                                     <outlet property="separatorLineHeightConstraint" destination="Ih0-W4-ozn" id="85l-Gz-2Ph"/>
                                     <outlet property="separatorLineView" destination="m78-ea-hDJ" id="4ZY-Qb-H2B"/>
                                     <outlet property="titleLabel" destination="1Kt-bO-u7V" id="UGg-GO-i7N"/>
-                                    <segue destination="Zqc-mu-HmF" kind="show" id="JeY-82-cys"/>
+                                    <segue destination="Zqc-mu-HmF" kind="show" destinationCreationSelector="showPlaylistDetails:sender:" id="JeY-82-cys"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
