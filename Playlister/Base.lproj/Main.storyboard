@@ -231,9 +231,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lcO-O1-i1d">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lcO-O1-i1d">
                                 <rect key="frame" x="0.0" y="310" width="390" height="451"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Track" textLabel="BQs-dZ-HdQ" detailTextLabel="VFs-Pl-7Nd" imageView="imK-xs-XQS" style="IBUITableViewCellStyleSubtitle" id="K2j-zd-4Nr">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="K2j-zd-4Nr" id="mnj-5b-3fX">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BQs-dZ-HdQ">
+                                                    <rect key="frame" x="55.666666666666657" y="7.0000000000000009" width="25" height="14.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VFs-Pl-7Nd">
+                                                    <rect key="frame" x="55.666666666666671" y="23.333333333333336" width="40.666666666666664" height="13.333333333333334"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="music.note" catalog="system" id="imK-xs-XQS">
+                                                    <rect key="frame" x="23.166666666666668" y="12.333333333333336" width="14.333333333333334" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="tintColor" systemColor="systemFillColor"/>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEw-2M-tZC">
                                 <rect key="frame" x="0.0" y="88" width="390" height="222"/>
@@ -260,7 +291,15 @@
                                         <exclude reference="NXp-nr-4Ot"/>
                                     </mask>
                                 </variation>
-                                <variation key="widthClass=regular">
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="LKQ-fE-93J"/>
+                                        <exclude reference="Mmj-jb-7jt"/>
+                                        <include reference="NXp-nr-4Ot"/>
+                                        <exclude reference="zPl-SK-S6I"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
                                     <mask key="constraints">
                                         <include reference="LKQ-fE-93J"/>
                                         <exclude reference="Mmj-jb-7jt"/>
@@ -288,18 +327,30 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="a7S-4j-HSU"/>
                                 <exclude reference="z1e-eR-QuC"/>
+                                <exclude reference="a7S-4j-HSU"/>
                                 <exclude reference="CmZ-j9-t6J"/>
                                 <exclude reference="QuF-Dy-kHj"/>
                             </mask>
                         </variation>
-                        <variation key="widthClass=regular">
+                        <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="a7S-4j-HSU"/>
-                                <exclude reference="o4M-Lw-02r"/>
                                 <exclude reference="UkR-cM-LwU"/>
                                 <include reference="z1e-eR-QuC"/>
+                                <include reference="a7S-4j-HSU"/>
+                                <exclude reference="o4M-Lw-02r"/>
+                                <include reference="CmZ-j9-t6J"/>
+                                <exclude reference="Qba-mS-Z9l"/>
+                                <include reference="QuF-Dy-kHj"/>
+                                <exclude reference="h5x-6b-lNR"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="UkR-cM-LwU"/>
+                                <include reference="z1e-eR-QuC"/>
+                                <include reference="a7S-4j-HSU"/>
+                                <exclude reference="o4M-Lw-02r"/>
                                 <include reference="CmZ-j9-t6J"/>
                                 <exclude reference="Qba-mS-Z9l"/>
                                 <include reference="QuF-Dy-kHj"/>
@@ -342,6 +393,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="globe" catalog="system" width="128" height="121"/>
+        <image name="music.note" catalog="system" width="97" height="128"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
