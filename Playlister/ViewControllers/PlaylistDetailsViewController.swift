@@ -10,6 +10,8 @@ import UIKit
 class PlaylistDetailsViewController: UIViewController {
     
     var playlist: Playlist!
+    @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     
     init?(coder: NSCoder, playlist: Playlist) {
         self.playlist = playlist
