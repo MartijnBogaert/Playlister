@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import SafariServices
 
-class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SFSafariViewControllerDelegate {
     var playlist: Playlist!
     var coverURL: String?
+    var safariViewController: SFSafariViewController?
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -72,6 +74,21 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         cell.imageView?.image = UIImage(named: "SpotifyIcon")
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "open.spotify.com"
+        urlComponents.path = "/track/\(playlist.tracks[indexPath.row].spotifyId)"
+        
+        if let url = urlComponents.url {
+            let safariViewController = SFSafariViewController(url: url)
+            safariViewController.delegate = self
+            present(safariViewController, animated: true)
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }
