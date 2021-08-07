@@ -10,17 +10,32 @@ import Foundation
 // MARK: SpotifyTrack
 
 struct SpotifyTrack {
-    let id: String?
-    let name: String?
-    let artists: [SpotifyTrackArtist]?
+    var id: String? // Local tracks have no Spotify ID
+    let name: String
+    let artists: [SpotifyTrackArtist]
 }
 
 extension SpotifyTrack: Codable { }
 
+extension SpotifyTrack {
+    func convertToTrack() -> Track? {
+        guard let id = id else { return nil }
+        return Track(spotifyId: id, name: name, artists: artists.map({ Artist(name: $0.name) }))
+    }
+}
+
+// MARK: SpotifyTrackContainer
+
+struct SpotifyTrackContainer {
+    let track: SpotifyTrack
+}
+
+extension SpotifyTrackContainer: Codable { }
+
 // MARK: SpotifyTrackArtist
 
 struct SpotifyTrackArtist {
-    let name: String?
+    let name: String
 }
 
 extension SpotifyTrackArtist: Codable { }

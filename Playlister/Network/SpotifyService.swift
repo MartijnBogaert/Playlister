@@ -125,7 +125,7 @@ struct SpotifyImageRequest: APIRequest {
 }
 
 struct SpotifyPlaylistTracksRequest: APIRequest {
-    typealias Response = [SpotifyPagingObject<SpotifyTrack>]
+    typealias Response = SpotifyPagingObject<SpotifyTrackContainer>
     
     var playlistId: String
     var accessToken: String

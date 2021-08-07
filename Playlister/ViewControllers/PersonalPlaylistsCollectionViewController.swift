@@ -76,9 +76,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
                 cell.titleLabel.text = playlist.name
                 cell.coverImageView.image = UIImage(systemName: "music.note.list")
                 
-                if playlist.images.count > 0 {
-                    let spotifyImage = playlist.images.first(where: { $0.height == 300 }) ?? playlist.images.first!
-                    
+                if let spotifyImage = playlist.images.last {
                     SpotifyImageRequest(fromURL: spotifyImage.url)?.send(completion: { result in
                         if case .success(let image) = result {
                             DispatchQueue.main.async {
@@ -141,7 +139,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
         
         switch item {
         case .spotifyPlaylist(let spotifyPlaylist):
-            return PlaylistDetailsViewController(coder: coder, playlist: spotifyPlaylist.convertToPlaylist())
+            return PlaylistDetailsViewController(coder: coder, playlist: spotifyPlaylist.convertToPlaylist(), coverURL: spotifyPlaylist.images.first?.url)
         }
         
     }

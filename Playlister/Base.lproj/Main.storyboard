@@ -257,8 +257,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="music.note" catalog="system" id="imK-xs-XQS">
-                                                    <rect key="frame" x="23.166666666666668" y="12.333333333333336" width="14.333333333333334" height="19"/>
+                                                    <rect key="frame" x="24.166666666666668" y="14" width="12.333333333333334" height="15.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>

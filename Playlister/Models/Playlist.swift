@@ -23,10 +23,19 @@ extension Playlist: Codable { }
 struct Track {
     let spotifyId: String
     var name: String
+    var artists: [Artist]
     var conversionState: TrackConversionState = .converting
 }
 
 extension Track: Codable { }
+
+// MARK: Artist
+
+struct Artist {
+    let name: String
+}
+
+extension Artist: Codable { }
 
 // MARK: TrackConversionState
 

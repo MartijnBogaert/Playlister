@@ -7,14 +7,15 @@
 
 import UIKit
 
-class PlaylistDetailsViewController: UIViewController {
-    
+class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var playlist: Playlist!
+    var coverURL: String?
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
-    init?(coder: NSCoder, playlist: Playlist) {
+    init?(coder: NSCoder, playlist: Playlist, coverURL: String?) {
         self.playlist = playlist
+        self.coverURL = coverURL
         super.init(coder: coder)
     }
     
@@ -25,7 +26,52 @@ class PlaylistDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = playlist.name
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        title = playlist.name
+        
+        if let token = Storage.shared.spotifyTokens?.accessToken {
+            SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, accessToken: token).send { result in
+                if case .success(let spotifyPagingObject) = result {
+                    let tracks = spotifyPagingObject.items.reduce(into: [Track]()) { partial, spotifyTrackContainer in
+                        if let track = spotifyTrackContainer.track.convertToTrack() {
+                            partial.append(track)
+                        }
+                    }
+                    self.playlist.tracks = tracks
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+        
+        if let coverURL = coverURL {
+            SpotifyImageRequest(fromURL: coverURL)?.send(completion: { result in
+                if case .success(let image) = result {
+                    DispatchQueue.main.async {
+                        self.coverImageView.image = image
+                    }
+                }
+            })
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return playlist.tracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Track", for: indexPath)
+        let track = playlist.tracks[indexPath.row]
+        
+        cell.textLabel?.text = track.name
+        cell.detailTextLabel?.text =  track.artists.map { $0.name }.joined(separator: " - ")
+        cell.imageView?.image = UIImage(named: "SpotifyIcon")
+        
+        return cell
     }
 
 }
