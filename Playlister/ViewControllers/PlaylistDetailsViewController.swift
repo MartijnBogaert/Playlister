@@ -9,9 +9,9 @@ import UIKit
 import SafariServices
 
 class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SFSafariViewControllerDelegate {
+    
     var playlist: Playlist!
     var coverURL: String?
-    var safariViewController: SFSafariViewController?
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     

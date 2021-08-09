@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SafariServices
 
-class PersonalPlaylistsCollectionViewController: UICollectionViewController {
+class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFSafariViewControllerDelegate {
     
     typealias DataSourceType = UICollectionViewDiffableDataSource<ViewModel.Section, ViewModel.Item>
     
@@ -115,11 +116,19 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            // let item = self.dataSource.itemIdentifier(for: indexPath)!
+            guard let item = self.dataSource.itemIdentifier(for: indexPath), case .spotifyPlaylist(let playlist) = item else { return nil }
             
-            let saveToggle = UIAction(title: "Save Playlist", image: UIImage(systemName: "square.and.arrow.down")) { action in
-                // perform action
-                //self.updateCollectionView()
+            let saveToggle = UIAction(title: "Open in Spotify", image: UIImage(systemName: "arrow.up.forward.app")) { action in
+                var urlComponents = URLComponents()
+                urlComponents.scheme = "https"
+                urlComponents.host = "open.spotify.com"
+                urlComponents.path = "/playlist/\(playlist.id)"
+                
+                if let url = urlComponents.url {
+                    let safariViewController = SFSafariViewController(url: url)
+                    safariViewController.delegate = self
+                    self.present(safariViewController, animated: true)
+                }
             }
             
             return UIMenu(children: [saveToggle])
