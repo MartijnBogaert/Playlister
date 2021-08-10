@@ -40,9 +40,9 @@ extension SpotifyAccessTokenResponse: Codable {
 // MARK: SpotifyTokenStorage - Model for storing Spotify tokens on device
 
 struct SpotifyTokensStorage {
-    let accessToken: String?
-    let refreshToken: String?
-    let accessTokenExpiryDate: Date?
+    let accessToken: String
+    let refreshToken: String
+    let accessTokenExpiryDate: Date
 }
 
 extension SpotifyTokensStorage: Codable { }
@@ -55,8 +55,6 @@ extension SpotifyTokensStorage {
     }
     
     func accessTokenIsValid() -> Bool {
-        guard let _ = accessToken, let accessTokenExpiryDate = accessTokenExpiryDate else { return false }
-        
         return Date() <= accessTokenExpiryDate
     }
 }

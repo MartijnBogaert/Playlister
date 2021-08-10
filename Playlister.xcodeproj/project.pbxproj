@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,6 +28,10 @@
 		E33EEFCA26BB298100D0C600 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFC926BB298100D0C600 /* Playlist.swift */; };
 		E33EEFCC26BB334A00D0C600 /* SpotifyPagingObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFCB26BB334A00D0C600 /* SpotifyPagingObject.swift */; };
 		E33EEFCE26BB374500D0C600 /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */; };
+		E3FA6E9D26C1B7140033B97D /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = E3FA6E9C26C1B7140033B97D /* SwiftJWT */; };
+		E3FA6E9F26C1B7950033B97D /* AppleMusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6E9E26C1B7950033B97D /* AppleMusicService.swift */; };
+		E3FA6EA126C1B7C50033B97D /* AppleMusicPrivateKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = E3FA6EA026C1B7C50033B97D /* AppleMusicPrivateKey.p8 */; };
+		E3FA6EA326C1DCB60033B97D /* AppleMusicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +79,9 @@
 		E33EEFC926BB298100D0C600 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		E33EEFCB26BB334A00D0C600 /* SpotifyPagingObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyPagingObject.swift; sourceTree = "<group>"; };
 		E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
+		E3FA6E9E26C1B7950033B97D /* AppleMusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicService.swift; sourceTree = "<group>"; };
+		E3FA6EA026C1B7C50033B97D /* AppleMusicPrivateKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppleMusicPrivateKey.p8; sourceTree = "<group>"; };
+		E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FA6E9D26C1B7140033B97D /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,8 +180,10 @@
 		E33EEFB126B93A0900D0C600 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				E3FA6EA026C1B7C50033B97D /* AppleMusicPrivateKey.p8 */,
 				E33EEFB226B93A1700D0C600 /* APIRequest.swift */,
 				E33EEFB426B9424400D0C600 /* SpotifyService.swift */,
+				E3FA6E9E26C1B7950033B97D /* AppleMusicService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -186,6 +196,7 @@
 				E33EEFCB26BB334A00D0C600 /* SpotifyPagingObject.swift */,
 				E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */,
 				E33EEFC926BB298100D0C600 /* Playlist.swift */,
+				E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,6 +234,9 @@
 			dependencies = (
 			);
 			name = Playlister;
+			packageProductDependencies = (
+				E3FA6E9C26C1B7140033B97D /* SwiftJWT */,
+			);
 			productName = Playlister;
 			productReference = E30CADC626B7E1A3008B4B53 /* Playlister.app */;
 			productType = "com.apple.product-type.application";
@@ -294,6 +308,9 @@
 				Base,
 			);
 			mainGroup = E30CADBD26B7E1A3008B4B53;
+			packageReferences = (
+				E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+			);
 			productRefGroup = E30CADC726B7E1A3008B4B53 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -310,6 +327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FA6EA126C1B7C50033B97D /* AppleMusicPrivateKey.p8 in Resources */,
 				E30CADD626B7E1A6008B4B53 /* LaunchScreen.storyboard in Resources */,
 				E30CADD326B7E1A6008B4B53 /* Assets.xcassets in Resources */,
 				E30CADD126B7E1A3008B4B53 /* Main.storyboard in Resources */,
@@ -337,12 +355,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FA6EA326C1DCB60033B97D /* AppleMusicToken.swift in Sources */,
 				E33EEFCE26BB374500D0C600 /* SpotifyTrack.swift in Sources */,
 				E33EEFBF26B9D03000D0C600 /* SpotifyPlaylist.swift in Sources */,
 				E30CADCA26B7E1A3008B4B53 /* AppDelegate.swift in Sources */,
 				E33EEFB326B93A1700D0C600 /* APIRequest.swift in Sources */,
 				E30CADFB26B7F357008B4B53 /* PersonalPlaylistsCollectionViewController.swift in Sources */,
 				E33EEFC626BAC26800D0C600 /* PlaylistCollectionViewCell.swift in Sources */,
+				E3FA6E9F26C1B7950033B97D /* AppleMusicService.swift in Sources */,
 				E33EEFCC26BB334A00D0C600 /* SpotifyPagingObject.swift in Sources */,
 				E33EEFCA26BB298100D0C600 /* Playlist.swift in Sources */,
 				E33EEFC826BAD0EE00D0C600 /* UICollectionViewDiffableDataSource+ViewModel.swift in Sources */,
@@ -685,6 +705,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.200;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E3FA6E9C26C1B7140033B97D /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E30CADBE26B7E1A3008B4B53 /* Project object */;
 }

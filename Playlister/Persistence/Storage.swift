@@ -12,6 +12,7 @@ struct Storage {
     
     enum Keys {
         static let spotifyTokens = "spotifyTokens"
+        static let appleDeveloperToken = "appleDeveloperToken"
     }
     
     var spotifyTokens: SpotifyTokensStorage? {
@@ -20,6 +21,15 @@ struct Storage {
         }
         set {
             archiveJSON(value: newValue, key: Keys.spotifyTokens)
+        }
+    }
+    
+    var appleDeveloperToken: AppleMusicToken? {
+        get {
+            unarchiveJSON(key: Keys.appleDeveloperToken) ?? nil
+        }
+        set {
+            archiveJSON(value: newValue, key: Keys.appleDeveloperToken)
         }
     }
     
