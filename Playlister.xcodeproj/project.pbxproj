@@ -31,7 +31,7 @@
 		E3FA6E9D26C1B7140033B97D /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = E3FA6E9C26C1B7140033B97D /* SwiftJWT */; };
 		E3FA6E9F26C1B7950033B97D /* AppleMusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6E9E26C1B7950033B97D /* AppleMusicService.swift */; };
 		E3FA6EA126C1B7C50033B97D /* AppleMusicPrivateKey.p8 in Resources */ = {isa = PBXBuildFile; fileRef = E3FA6EA026C1B7C50033B97D /* AppleMusicPrivateKey.p8 */; };
-		E3FA6EA326C1DCB60033B97D /* AppleMusicToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */; };
+		E3FA6EA326C1DCB60033B97D /* AppleToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA226C1DCB60033B97D /* AppleToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +81,7 @@
 		E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTrack.swift; sourceTree = "<group>"; };
 		E3FA6E9E26C1B7950033B97D /* AppleMusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicService.swift; sourceTree = "<group>"; };
 		E3FA6EA026C1B7C50033B97D /* AppleMusicPrivateKey.p8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppleMusicPrivateKey.p8; sourceTree = "<group>"; };
-		E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicToken.swift; sourceTree = "<group>"; };
+		E3FA6EA226C1DCB60033B97D /* AppleToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +196,7 @@
 				E33EEFCB26BB334A00D0C600 /* SpotifyPagingObject.swift */,
 				E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */,
 				E33EEFC926BB298100D0C600 /* Playlist.swift */,
-				E3FA6EA226C1DCB60033B97D /* AppleMusicToken.swift */,
+				E3FA6EA226C1DCB60033B97D /* AppleToken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3FA6EA326C1DCB60033B97D /* AppleMusicToken.swift in Sources */,
+				E3FA6EA326C1DCB60033B97D /* AppleToken.swift in Sources */,
 				E33EEFCE26BB374500D0C600 /* SpotifyTrack.swift in Sources */,
 				E33EEFBF26B9D03000D0C600 /* SpotifyPlaylist.swift in Sources */,
 				E30CADCA26B7E1A3008B4B53 /* AppDelegate.swift in Sources */,

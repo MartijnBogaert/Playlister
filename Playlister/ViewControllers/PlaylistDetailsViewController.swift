@@ -91,4 +91,6 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
+    @IBAction func saveButtonTouched(_ sender: UIBarButtonItem) {
+    }
 }

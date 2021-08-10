@@ -108,7 +108,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Personal Playlists" id="v5K-aJ-XK5">
-                        <barButtonItem key="rightBarButtonItem" title="User" image="person.circle" catalog="system" style="plain" id="VGE-WZ-yJU">
+                        <barButtonItem key="rightBarButtonItem" title="User" image="person.circle" catalog="system" id="VGE-WZ-yJU">
                             <connections>
                                 <segue destination="Qh7-8p-0hu" kind="presentation" id="lDw-sG-Z0Q"/>
                             </connections>
@@ -131,7 +131,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
                                 <items>
                                     <navigationItem title="Manage Accounts" largeTitleDisplayMode="never" id="fMU-nw-y9a">
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="j4P-hp-8NJ">
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="j4P-hp-8NJ">
                                             <connections>
                                                 <segue destination="2iE-c9-UuT" kind="unwind" unwindAction="unwindFromUserDetailsViewControllerWithUnwindSegue:" id="vU4-XH-YlG"/>
                                             </connections>
@@ -139,25 +139,38 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhb-yg-ydG">
-                                <rect key="frame" x="130.66666666666666" y="380" width="128.99999999999997" height="30"/>
-                                <state key="normal" title="Connect to Spotify"/>
-                                <connections>
-                                    <action selector="connectToSpotifyButtonPressed" destination="Qh7-8p-0hu" eventType="touchUpInside" id="rHY-cP-RCD"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qSW-23-r94">
+                                <rect key="frame" x="113" y="355" width="164" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhb-yg-ydG">
+                                        <rect key="frame" x="0.0" y="0.0" width="164" height="30"/>
+                                        <state key="normal" title="Connect to Spotify"/>
+                                        <connections>
+                                            <action selector="connectToSpotifyButtonPressed" destination="Qh7-8p-0hu" eventType="touchUpInside" id="rHY-cP-RCD"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uan-um-WCl">
+                                        <rect key="frame" x="0.0" y="50" width="164" height="30"/>
+                                        <state key="normal" title="Connect to Apple Music"/>
+                                        <connections>
+                                            <action selector="connectToAppleMusicButtonPressed" destination="Qh7-8p-0hu" eventType="touchUpInside" id="7Yo-mh-fAj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4dj-YL-lFS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="hhb-yg-ydG" firstAttribute="centerY" secondItem="RAL-mv-E5V" secondAttribute="centerY" id="EDW-Ka-Yfg"/>
                             <constraint firstItem="l4k-Y4-zeD" firstAttribute="trailing" secondItem="4dj-YL-lFS" secondAttribute="trailing" id="Tsw-hU-BKM"/>
                             <constraint firstItem="l4k-Y4-zeD" firstAttribute="top" secondItem="4dj-YL-lFS" secondAttribute="top" id="Vtp-CN-rcW"/>
-                            <constraint firstItem="hhb-yg-ydG" firstAttribute="centerX" secondItem="RAL-mv-E5V" secondAttribute="centerX" id="dJn-fF-ULI"/>
+                            <constraint firstItem="qSW-23-r94" firstAttribute="centerX" secondItem="RAL-mv-E5V" secondAttribute="centerX" id="X2f-Kk-EPt"/>
+                            <constraint firstItem="qSW-23-r94" firstAttribute="centerY" secondItem="RAL-mv-E5V" secondAttribute="centerY" id="eBs-Lo-HoW"/>
                             <constraint firstItem="l4k-Y4-zeD" firstAttribute="leading" secondItem="4dj-YL-lFS" secondAttribute="leading" id="oad-jc-iWH"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="connectToAppleMusicButton" destination="Uan-um-WCl" id="cEa-aL-yX3"/>
                         <outlet property="connectToSpotifyButton" destination="hhb-yg-ydG" id="lHF-5K-4st"/>
                     </connections>
                 </viewController>
@@ -216,14 +229,14 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Public Playlists" id="g47-i0-GkP">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="cb5-Uq-kLk"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cb5-Uq-kLk"/>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L8v-K9-NUx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1089.8550724637682" y="36.830357142857139"/>
         </scene>
-        <!--Playlist Details View Controller-->
+        <!--Playlist-->
         <scene sceneID="Uje-oC-wVz">
             <objects>
                 <viewController id="Zqc-mu-HmF" customClass="PlaylistDetailsViewController" customModule="Playlister" customModuleProvider="target" sceneMemberID="viewController">
@@ -359,7 +372,13 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="9np-js-kEY"/>
+                    <navigationItem key="navigationItem" title="Playlist" largeTitleDisplayMode="never" id="9np-js-kEY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4Db-fs-M1K">
+                            <connections>
+                                <action selector="saveButtonTouched:" destination="Zqc-mu-HmF" id="c0u-Ox-Hnl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="coverImageView" destination="sg7-Q9-duH" id="Rov-su-SGn"/>
                         <outlet property="tableView" destination="lcO-O1-i1d" id="WLb-70-BpC"/>
@@ -390,7 +409,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JeY-82-cys"/>
+        <segue reference="8Ur-Ra-9tS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="globe" catalog="system" width="128" height="121"/>

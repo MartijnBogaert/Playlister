@@ -8,26 +8,26 @@
 import Foundation
 import SwiftJWT
 
-struct AppleMusicToken {
+struct AppleToken {
     let token: String
     let tokenExpiryDate: Date
-}
-
-extension AppleMusicToken: Codable { }
-
-extension AppleMusicToken {
-    init(token: String, tokenExpiryDate: Date?) {
-        self.token = token
-        self.tokenExpiryDate = tokenExpiryDate ?? Date() + 2_592_000 // 2 592 000 seconds = 30 days
-    }
     
-    func tokenIsValid() -> Bool {
-        return Date() <= tokenExpiryDate
+    init(token: String, tokenExpiryDate: Date = Date() + 2_592_000) { // 2 592 000 seconds = 30 days
+        self.token = token
+        self.tokenExpiryDate = tokenExpiryDate
     }
 }
 
-extension AppleMusicToken {
-    static func generateDeveloperToken() -> AppleMusicToken? {
+extension AppleToken: Codable { }
+
+extension AppleToken {
+    var isValid: Bool {
+        Date() <= tokenExpiryDate
+    }
+}
+
+extension AppleToken {
+    static func generateDeveloperToken() -> AppleToken? {
         let tokenHeader = Header(kid: "252T9PZACS")
 
         struct TokenClaims: Claims {
@@ -49,6 +49,6 @@ extension AppleMusicToken {
         
         guard let signedJWT = try? unsignedJWT.sign(using: jwtSigner) else { return nil }
         
-        return AppleMusicToken(token: signedJWT, tokenExpiryDate: expiryDate)
+        return AppleToken(token: signedJWT, tokenExpiryDate: expiryDate)
     }
 }

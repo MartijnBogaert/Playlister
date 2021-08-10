@@ -53,8 +53,10 @@ extension SpotifyTokensStorage {
         self.refreshToken = refreshToken
         self.accessTokenExpiryDate = Date(timeIntervalSinceNow: Double(accessTokenExpiresIn) - 60.0)
     }
-    
-    func accessTokenIsValid() -> Bool {
-        return Date() <= accessTokenExpiryDate
+}
+
+extension SpotifyTokensStorage {
+    var accessTokenIsValid: Bool {
+        Date() <= accessTokenExpiryDate
     }
 }
