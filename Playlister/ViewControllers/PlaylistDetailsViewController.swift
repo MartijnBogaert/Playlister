@@ -81,7 +81,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         urlComponents.scheme = "https"
         urlComponents.host = "open.spotify.com"
         urlComponents.path = "/track/\(playlist.tracks[indexPath.row].spotifyId)"
-        
+
         if let url = urlComponents.url {
             let safariViewController = SFSafariViewController(url: url)
             safariViewController.delegate = self
@@ -92,5 +92,14 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     @IBAction func saveButtonTouched(_ sender: UIBarButtonItem) {
+        if let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid {
+            playlist.tracks.forEach { track in
+                let searchTerm = "\(track.name) \(track.artists.map { $0.name }.joined(separator: " "))"
+                AppleMusicSearchRequest(searchTerm: searchTerm, storefront: "be", developerToken: developerToken.token).sendForDebugging { string in
+                    print(string)
+                }
+            }
+        }
     }
+    
 }
