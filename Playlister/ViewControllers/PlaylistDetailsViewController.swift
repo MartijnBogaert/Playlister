@@ -14,6 +14,8 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
     var coverURL: String?
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
     
     init?(coder: NSCoder, playlist: Playlist, coverURL: String?) {
         self.playlist = playlist
@@ -32,6 +34,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         tableView.dataSource = self
         
         title = playlist.name
+        progressViewHeight.constant = 0
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, accessToken: token).send { result in
@@ -100,8 +103,15 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     @IBAction func saveButtonTouched(_ sender: UIBarButtonItem) {
-        if let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid {
-            for (index, track) in playlist.tracks.enumerated() {
+        let unconvertedOrFailedTracks = playlist.tracks.filter({ $0.conversionState != .converted })
+        
+        if !unconvertedOrFailedTracks.isEmpty, let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid {
+            var numberOfConvertedOrFailedTracks = 0
+            
+            progressView.progress = 0.0
+            progressViewHeight.constant = 4
+            
+            for (index, track) in unconvertedOrFailedTracks.enumerated() {
                 let cleanedArtistName = track.artistName
                     .split(separator: ",")
                     .map { $0.trimmingCharacters(in: .whitespaces) }
@@ -121,8 +131,16 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                     }
                     
                     self.playlist.tracks[index] = updatedTrack
+                    numberOfConvertedOrFailedTracks += 1
                     
                     DispatchQueue.main.async {
+                        let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
+                        if progress == 1.0 {
+                            self.progressViewHeight.constant = 0
+                        } else {
+                            self.progressView.progress = progress
+                        }
+                        
                         self.tableView.reloadData()
                     }
                 }

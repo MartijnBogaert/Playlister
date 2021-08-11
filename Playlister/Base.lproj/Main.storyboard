@@ -352,18 +352,18 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="a7S-4j-HSU"/>
                                 <exclude reference="z1e-eR-QuC"/>
+                                <exclude reference="a7S-4j-HSU"/>
                                 <exclude reference="CmZ-j9-t6J"/>
                                 <exclude reference="QuF-Dy-kHj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="a7S-4j-HSU"/>
-                                <exclude reference="o4M-Lw-02r"/>
                                 <exclude reference="UkR-cM-LwU"/>
                                 <include reference="z1e-eR-QuC"/>
+                                <include reference="a7S-4j-HSU"/>
+                                <exclude reference="o4M-Lw-02r"/>
                                 <include reference="CmZ-j9-t6J"/>
                                 <exclude reference="Qba-mS-Z9l"/>
                                 <include reference="QuF-Dy-kHj"/>
@@ -372,10 +372,10 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="a7S-4j-HSU"/>
-                                <exclude reference="o4M-Lw-02r"/>
                                 <exclude reference="UkR-cM-LwU"/>
                                 <include reference="z1e-eR-QuC"/>
+                                <include reference="a7S-4j-HSU"/>
+                                <exclude reference="o4M-Lw-02r"/>
                                 <include reference="CmZ-j9-t6J"/>
                                 <exclude reference="Qba-mS-Z9l"/>
                                 <include reference="QuF-Dy-kHj"/>
@@ -392,6 +392,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="coverImageView" destination="sg7-Q9-duH" id="Rov-su-SGn"/>
+                        <outlet property="progressView" destination="kzU-L0-JEf" id="KX8-Bf-hWh"/>
+                        <outlet property="progressViewHeight" destination="tng-o8-w6J" id="Vt4-74-OCT"/>
                         <outlet property="tableView" destination="lcO-O1-i1d" id="WLb-70-BpC"/>
                     </connections>
                 </viewController>
