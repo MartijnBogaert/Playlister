@@ -112,7 +112,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
             progressViewHeight.constant = 4
             
             for (index, track) in playlist.tracks.enumerated() {
-                if unconvertedOrFailedTracks.contains(track) {
+                if track.conversionState != .converted {
                     let cleanedArtistName = track.artistName
                         .split(separator: ",")
                         .map { $0.trimmingCharacters(in: .whitespaces) }
