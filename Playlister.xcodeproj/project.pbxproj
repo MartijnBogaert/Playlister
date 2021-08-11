@@ -35,6 +35,7 @@
 		E3FA6EA526C2E81F0033B97D /* AppleMusicTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA426C2E81F0033B97D /* AppleMusicTrack.swift */; };
 		E3FA6EA726C2EE6B0033B97D /* AppleMusicSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA626C2EE6B0033B97D /* AppleMusicSearchResponse.swift */; };
 		E3FA6EA926C3008C0033B97D /* ViewLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EA826C3008C0033B97D /* ViewLoadingIndicator.swift */; };
+		E3FA6EAB26C4217D0033B97D /* AppleMusicPlaylistCreationObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FA6EAA26C4217D0033B97D /* AppleMusicPlaylistCreationObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		E3FA6EA426C2E81F0033B97D /* AppleMusicTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicTrack.swift; sourceTree = "<group>"; };
 		E3FA6EA626C2EE6B0033B97D /* AppleMusicSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicSearchResponse.swift; sourceTree = "<group>"; };
 		E3FA6EA826C3008C0033B97D /* ViewLoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLoadingIndicator.swift; sourceTree = "<group>"; };
+		E3FA6EAA26C4217D0033B97D /* AppleMusicPlaylistCreationObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleMusicPlaylistCreationObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				E3FA6EA226C1DCB60033B97D /* AppleToken.swift */,
 				E3FA6EA426C2E81F0033B97D /* AppleMusicTrack.swift */,
 				E3FA6EA626C2EE6B0033B97D /* AppleMusicSearchResponse.swift */,
+				E3FA6EAA26C4217D0033B97D /* AppleMusicPlaylistCreationObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E3FA6EA326C1DCB60033B97D /* AppleToken.swift in Sources */,
+				E3FA6EAB26C4217D0033B97D /* AppleMusicPlaylistCreationObject.swift in Sources */,
 				E3FA6EA526C2E81F0033B97D /* AppleMusicTrack.swift in Sources */,
 				E33EEFCE26BB374500D0C600 /* SpotifyTrack.swift in Sources */,
 				E33EEFBF26B9D03000D0C600 /* SpotifyPlaylist.swift in Sources */,

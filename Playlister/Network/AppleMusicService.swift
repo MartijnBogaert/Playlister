@@ -34,3 +34,26 @@ struct AppleMusicSearchRequest: APIRequest {
         return request
     }
 }
+
+struct AppleMusicPlaylistCreationRequest: APIRequest {
+    typealias Response = Void
+    
+    let playlist: AppleMusicPlaylistCreationObject
+    let developerToken: String
+    let musicUserToken: String
+    
+    var host: String { "api.music.apple.com" }
+    var path: String { "/v1/me/library/playlists" }
+    
+    var request: URLRequest {
+        var request = URLRequest(url: url)
+        
+        request.httpBody = try! JSONEncoder().encode(playlist)
+        request.addValue("Bearer \(developerToken)", forHTTPHeaderField: "Authorization")
+        request.addValue(musicUserToken, forHTTPHeaderField: "Music-User-Token")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        
+        return request
+    }
+}

@@ -139,6 +139,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                             let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
                             if progress == 1.0 {
                                 self.progressViewHeight.constant = 0
+                                self.createLibraryPlaylist()
                             } else {
                                 self.progressView.progress = progress
                             }
@@ -147,6 +148,18 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    private func createLibraryPlaylist() {
+        if let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid, let musicUserToken = Storage.shared.appleMusicUserToken, musicUserToken.isValid {
+            AppleMusicPlaylistCreationRequest(
+                playlist: AppleMusicPlaylistCreationObject(playlist: playlist),
+                developerToken: developerToken.token,
+                musicUserToken: musicUserToken.token
+            ).sendForDebugging { string in
+                print(string)
             }
         }
     }
