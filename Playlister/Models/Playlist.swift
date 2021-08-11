@@ -30,6 +30,12 @@ struct Track {
 
 extension Track: Codable { }
 
+extension Track: Equatable {
+    static func == (lhs: Track, rhs: Track) -> Bool {
+        return lhs.spotifyId == rhs.spotifyId
+    }
+}
+
 // MARK: TrackConversionState
 
 enum TrackConversionState: Int {

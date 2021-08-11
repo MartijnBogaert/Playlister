@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "spotify-logo-light-mode.png",
+      "filename" : "apple-music-logo-light-mode.png",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "spotify-logo-dark-mode.png",
+      "filename" : "apple-music-logo-dark-mode.png",
       "idiom" : "universal"
     }
   ],

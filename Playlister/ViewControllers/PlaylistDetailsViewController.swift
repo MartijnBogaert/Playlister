@@ -79,9 +79,9 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         case .unconverted:
             cell.imageView?.image = UIImage(named: "SpotifyIcon")
         case .converted:
-            cell.imageView?.image = UIImage(systemName: "checkmark.circle")
+            cell.imageView?.image = UIImage(named: "AppleMusicIcon")
         case .failed:
-            cell.imageView?.image = UIImage(systemName: "exclamationmark.triangle")
+            cell.imageView?.image = UIImage(named: "WarningIcon")
         }
         
         return cell
@@ -111,37 +111,40 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
             progressView.progress = 0.0
             progressViewHeight.constant = 4
             
-            for (index, track) in unconvertedOrFailedTracks.enumerated() {
-                let cleanedArtistName = track.artistName
-                    .split(separator: ",")
-                    .map { $0.trimmingCharacters(in: .whitespaces) }
-                    .joined(separator: " ")
-                let searchTerm = "\(track.name) \(cleanedArtistName)"
-                
-                AppleMusicSearchRequest(searchTerm: searchTerm, storefront: "be", developerToken: developerToken.token).send { result in
-                    var updatedTrack = self.playlist.tracks[index]
+            for (index, track) in playlist.tracks.enumerated() {
+                if unconvertedOrFailedTracks.contains(track) {
+                    let cleanedArtistName = track.artistName
+                        .split(separator: ",")
+                        .map { $0.trimmingCharacters(in: .whitespaces) }
+                        .joined(separator: " ")
+                    let searchTerm = "\(track.name) \(cleanedArtistName)"
                     
-                    if case .success(let response) = result, let appleMusicTrack = response.results.tracksSearchResult.tracks.first {
-                        updatedTrack.appleMusicId = appleMusicTrack.id
-                        updatedTrack.artistName = appleMusicTrack.attributes?.name ?? ""
-                        updatedTrack.conversionState = .converted
-                    } else {
-                        updatedTrack.appleMusicId = nil
-                        updatedTrack.conversionState = .failed
-                    }
-                    
-                    self.playlist.tracks[index] = updatedTrack
-                    numberOfConvertedOrFailedTracks += 1
-                    
-                    DispatchQueue.main.async {
-                        let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
-                        if progress == 1.0 {
-                            self.progressViewHeight.constant = 0
+                    AppleMusicSearchRequest(searchTerm: searchTerm, storefront: "be", developerToken: developerToken.token).send { result in
+                        var updatedTrack = self.playlist.tracks[index]
+                        
+                        if case .success(let response) = result, let appleMusicTrack = response.results.tracksSearchResult.tracks.first {
+                            updatedTrack.appleMusicId = appleMusicTrack.id
+                            updatedTrack.name = appleMusicTrack.attributes?.name ?? ""
+                            updatedTrack.artistName = appleMusicTrack.attributes?.artistName ?? ""
+                            updatedTrack.conversionState = .converted
                         } else {
-                            self.progressView.progress = progress
+                            updatedTrack.appleMusicId = nil
+                            updatedTrack.conversionState = .failed
                         }
                         
-                        self.tableView.reloadData()
+                        self.playlist.tracks[index] = updatedTrack
+                        numberOfConvertedOrFailedTracks += 1
+                        
+                        DispatchQueue.main.async {
+                            let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
+                            if progress == 1.0 {
+                                self.progressViewHeight.constant = 0
+                            } else {
+                                self.progressView.progress = progress
+                            }
+                            
+                            self.tableView.reloadData()
+                        }
                     }
                 }
             }
