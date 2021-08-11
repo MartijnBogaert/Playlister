@@ -20,7 +20,7 @@ extension SpotifyTrack: Codable { }
 extension SpotifyTrack {
     func convertToTrack() -> Track? {
         guard let id = id else { return nil }
-        return Track(spotifyId: id, name: name, artists: artists.map({ Artist(name: $0.name) }))
+        return Track(spotifyId: id, name: name, artistName: artists.map { $0.name }.joined(separator: ", "))
     }
 }
 

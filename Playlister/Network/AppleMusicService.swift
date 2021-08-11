@@ -8,7 +8,7 @@
 import Foundation
 
 struct AppleMusicSearchRequest: APIRequest {
-    typealias Response = Void
+    typealias Response = AppleMusicSearchResponse
     
     let searchTerm: String
     let storefront: String

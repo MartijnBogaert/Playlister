@@ -70,8 +70,16 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         let track = playlist.tracks[indexPath.row]
         
         cell.textLabel?.text = track.name
-        cell.detailTextLabel?.text =  track.artists.map { $0.name }.joined(separator: " - ")
-        cell.imageView?.image = UIImage(named: "SpotifyIcon")
+        cell.detailTextLabel?.text =  track.artistName
+        
+        switch track.conversionState {
+        case .unconverted:
+            cell.imageView?.image = UIImage(named: "SpotifyIcon")
+        case .converted:
+            cell.imageView?.image = UIImage(systemName: "checkmark.circle")
+        case .failed:
+            cell.imageView?.image = UIImage(systemName: "exclamationmark.triangle")
+        }
         
         return cell
     }
@@ -93,10 +101,30 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
 
     @IBAction func saveButtonTouched(_ sender: UIBarButtonItem) {
         if let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid {
-            playlist.tracks.forEach { track in
-                let searchTerm = "\(track.name) \(track.artists.map { $0.name }.joined(separator: " "))"
-                AppleMusicSearchRequest(searchTerm: searchTerm, storefront: "be", developerToken: developerToken.token).sendForDebugging { string in
-                    print(string)
+            for (index, track) in playlist.tracks.enumerated() {
+                let cleanedArtistName = track.artistName
+                    .split(separator: ",")
+                    .map { $0.trimmingCharacters(in: .whitespaces) }
+                    .joined(separator: " ")
+                let searchTerm = "\(track.name) \(cleanedArtistName)"
+                
+                AppleMusicSearchRequest(searchTerm: searchTerm, storefront: "be", developerToken: developerToken.token).send { result in
+                    var updatedTrack = self.playlist.tracks[index]
+                    
+                    if case .success(let response) = result, let appleMusicTrack = response.results.tracksSearchResult.tracks.first {
+                        updatedTrack.appleMusicId = appleMusicTrack.id
+                        updatedTrack.artistName = appleMusicTrack.attributes?.name ?? ""
+                        updatedTrack.conversionState = .converted
+                    } else {
+                        updatedTrack.appleMusicId = nil
+                        updatedTrack.conversionState = .failed
+                    }
+                    
+                    self.playlist.tracks[index] = updatedTrack
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
         }

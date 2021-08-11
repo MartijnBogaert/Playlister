@@ -22,25 +22,18 @@ extension Playlist: Codable { }
 
 struct Track {
     let spotifyId: String
+    var appleMusicId: String?
     var name: String
-    var artists: [Artist]
-    var conversionState: TrackConversionState = .converting
+    var artistName: String
+    var conversionState: TrackConversionState = .unconverted
 }
 
 extension Track: Codable { }
 
-// MARK: Artist
-
-struct Artist {
-    let name: String
-}
-
-extension Artist: Codable { }
-
 // MARK: TrackConversionState
 
 enum TrackConversionState: Int {
-    case converting
+    case unconverted
     case converted
     case failed
 }

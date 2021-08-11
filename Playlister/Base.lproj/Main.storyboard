@@ -3,6 +3,7 @@
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -245,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lcO-O1-i1d">
-                                <rect key="frame" x="0.0" y="310" width="390" height="451"/>
+                                <rect key="frame" x="0.0" y="310" width="390" height="447"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Track" textLabel="BQs-dZ-HdQ" detailTextLabel="VFs-Pl-7Nd" imageView="imK-xs-XQS" style="IBUITableViewCellStyleSubtitle" id="K2j-zd-4Nr">
@@ -256,7 +257,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BQs-dZ-HdQ">
-                                                    <rect key="frame" x="55.666666666666657" y="7.0000000000000009" width="25" height="14.333333333333334"/>
+                                                    <rect key="frame" x="55.666666666666671" y="7.0000000000000009" width="25" height="14.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -269,10 +270,11 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="music.note" catalog="system" id="imK-xs-XQS">
-                                                    <rect key="frame" x="24.166666666666668" y="14" width="12.333333333333334" height="15.333333333333334"/>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="imK-xs-XQS">
+                                                    <rect key="frame" x="21.833333333333336" y="10.333333333333334" width="17" height="23.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                    <imageReference key="image" image="music.note" catalog="system" symbolScale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -280,7 +282,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEw-2M-tZC">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEw-2M-tZC" userLabel="Cover Container">
                                 <rect key="frame" x="0.0" y="88" width="390" height="222"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sg7-Q9-duH">
@@ -322,14 +324,22 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="kzU-L0-JEf">
+                                <rect key="frame" x="0.0" y="757" width="390" height="4"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="4" id="tng-o8-w6J"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZsJ-bK-4Tf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ZsJ-bK-4Tf" firstAttribute="bottom" secondItem="lcO-O1-i1d" secondAttribute="bottom" id="BuR-c1-cLF"/>
+                            <constraint firstItem="lcO-O1-i1d" firstAttribute="trailing" secondItem="kzU-L0-JEf" secondAttribute="trailing" id="7fu-3C-A1a"/>
+                            <constraint firstItem="kzU-L0-JEf" firstAttribute="top" secondItem="lcO-O1-i1d" secondAttribute="bottom" id="BuR-c1-cLF"/>
                             <constraint firstItem="lcO-O1-i1d" firstAttribute="leading" secondItem="JEw-2M-tZC" secondAttribute="trailing" id="CmZ-j9-t6J"/>
                             <constraint firstItem="lcO-O1-i1d" firstAttribute="top" secondItem="JEw-2M-tZC" secondAttribute="bottom" id="Qba-mS-Z9l"/>
                             <constraint firstItem="lcO-O1-i1d" firstAttribute="top" secondItem="ZsJ-bK-4Tf" secondAttribute="top" id="QuF-Dy-kHj"/>
+                            <constraint firstItem="kzU-L0-JEf" firstAttribute="leading" secondItem="lcO-O1-i1d" secondAttribute="leading" id="TzY-rE-Gfw"/>
                             <constraint firstItem="ZsJ-bK-4Tf" firstAttribute="trailing" secondItem="JEw-2M-tZC" secondAttribute="trailing" id="UkR-cM-LwU"/>
                             <constraint firstItem="JEw-2M-tZC" firstAttribute="width" secondItem="ZsJ-bK-4Tf" secondAttribute="width" multiplier="0.33" id="a7S-4j-HSU"/>
                             <constraint firstItem="lcO-O1-i1d" firstAttribute="leading" secondItem="ZsJ-bK-4Tf" secondAttribute="leading" id="h5x-6b-lNR"/>
@@ -337,22 +347,23 @@
                             <constraint firstItem="JEw-2M-tZC" firstAttribute="top" secondItem="ZsJ-bK-4Tf" secondAttribute="top" id="ma6-ph-grN"/>
                             <constraint firstItem="JEw-2M-tZC" firstAttribute="height" secondItem="ZsJ-bK-4Tf" secondAttribute="height" multiplier="0.33" id="o4M-Lw-02r"/>
                             <constraint firstItem="ZsJ-bK-4Tf" firstAttribute="trailing" secondItem="lcO-O1-i1d" secondAttribute="trailing" id="qtw-7o-jdF"/>
+                            <constraint firstItem="ZsJ-bK-4Tf" firstAttribute="bottom" secondItem="kzU-L0-JEf" secondAttribute="bottom" id="tVI-fP-dwy"/>
                             <constraint firstItem="ZsJ-bK-4Tf" firstAttribute="bottom" secondItem="JEw-2M-tZC" secondAttribute="bottom" id="z1e-eR-QuC"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="z1e-eR-QuC"/>
                                 <exclude reference="a7S-4j-HSU"/>
+                                <exclude reference="z1e-eR-QuC"/>
                                 <exclude reference="CmZ-j9-t6J"/>
                                 <exclude reference="QuF-Dy-kHj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <exclude reference="UkR-cM-LwU"/>
-                                <include reference="z1e-eR-QuC"/>
                                 <include reference="a7S-4j-HSU"/>
                                 <exclude reference="o4M-Lw-02r"/>
+                                <exclude reference="UkR-cM-LwU"/>
+                                <include reference="z1e-eR-QuC"/>
                                 <include reference="CmZ-j9-t6J"/>
                                 <exclude reference="Qba-mS-Z9l"/>
                                 <include reference="QuF-Dy-kHj"/>
@@ -361,10 +372,10 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <exclude reference="UkR-cM-LwU"/>
-                                <include reference="z1e-eR-QuC"/>
                                 <include reference="a7S-4j-HSU"/>
                                 <exclude reference="o4M-Lw-02r"/>
+                                <exclude reference="UkR-cM-LwU"/>
+                                <include reference="z1e-eR-QuC"/>
                                 <include reference="CmZ-j9-t6J"/>
                                 <exclude reference="Qba-mS-Z9l"/>
                                 <include reference="QuF-Dy-kHj"/>
