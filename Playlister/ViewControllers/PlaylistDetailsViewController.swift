@@ -168,7 +168,11 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                     playlistId: playlistId,
                     developerToken: developerToken.token,
                     musicUserToken: musicUserToken.token
-                ).send { _ in }
+                ).send { result in
+                    if case .success = result {
+                        Storage.shared.personalPlaylists?.update(with: self.playlist)
+                    }
+                }
             } else {
                 AppleMusicPlaylistCreationRequest(
                     playlist: AppleMusicPlaylistCreationObject(name: playlist.name, description: "Created using Playlister", tracks: tracks),
@@ -177,6 +181,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 ).send { result in
                     if case .success(let response) = result {
                         self.playlist.appleMusicId = response.createdPlaylists.first?.id
+                        Storage.shared.personalPlaylists?.update(with: self.playlist)
                         
                         DispatchQueue.main.async {
                             self.updateUI()

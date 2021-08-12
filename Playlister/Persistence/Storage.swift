@@ -14,6 +14,7 @@ struct Storage {
         static let spotifyTokens = "spotifyTokens"
         static let appleDeveloperToken = "appleDeveloperToken"
         static let appleMusicUserToken = "appleMusicUserToken"
+        static let personalPlaylists = "personalPlaylists"
     }
     
     var spotifyTokens: SpotifyTokensStorage? {
@@ -40,6 +41,22 @@ struct Storage {
         }
         set {
             archiveJSON(value: newValue, key: Keys.appleMusicUserToken)
+        }
+    }
+    
+    var personalPlaylists: Set<Playlist>? {
+        get {
+            if let playlists: Set<Playlist> = unarchiveJSON(key: Keys.personalPlaylists) {
+                return playlists
+            }
+            
+            let emptySet = Set<Playlist>()
+            archiveJSON(value: emptySet, key: Keys.personalPlaylists)
+            
+            return emptySet
+        }
+        set {
+            archiveJSON(value: newValue, key: Keys.personalPlaylists)
         }
     }
     

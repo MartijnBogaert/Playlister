@@ -19,6 +19,16 @@ struct Playlist {
 
 extension Playlist: Codable { }
 
+extension Playlist: Hashable {
+    static func == (lhs: Playlist, rhs: Playlist) -> Bool {
+        return lhs.spotifyId == rhs.spotifyId
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(spotifyId)
+    }
+}
+
 // MARK: Track
 
 struct Track {
