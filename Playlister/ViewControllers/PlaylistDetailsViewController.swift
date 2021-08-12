@@ -39,15 +39,24 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         progressViewHeight.constant = 0
         updateUI()
         
+        let storedPlaylist = Storage.shared.personalPlaylists?.first { $0.spotifyId == playlist.spotifyId }
+        playlist.tracks = storedPlaylist?.tracks ?? []
+        
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, accessToken: token).send { result in
                 if case .success(let spotifyPagingObject) = result {
-                    let tracks = spotifyPagingObject.items.reduce(into: [Track]()) { partial, spotifyTrackContainer in
-                        if let track = spotifyTrackContainer.track.convertToTrack() {
-                            partial.append(track)
+                    let newTracks = spotifyPagingObject.items.reduce(into: [Track]()) { partial, spotifyTrackContainer in
+                        if let track = Track(spotifyTrack: spotifyTrackContainer.track) {
+                            if let storedPlaylist = storedPlaylist {
+                                if !storedPlaylist.tracks.contains(track) {
+                                    partial.append(track)
+                                }
+                            } else {
+                                partial.append(track)
+                            }
                         }
                     }
-                    self.playlist.tracks = tracks
+                    self.playlist.tracks += newTracks
                 }
                 
                 DispatchQueue.main.async {

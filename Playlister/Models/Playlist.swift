@@ -11,9 +11,11 @@ import Foundation
 
 struct Playlist {
     let spotifyId: String
-    var appleMusicId: String?
     let name: String
     let spotifySnapshotId: String
+    let creationDate: Date
+    
+    var appleMusicId: String?
     var tracks: [Track] = []
 }
 
@@ -26,6 +28,21 @@ extension Playlist: Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(spotifyId)
+    }
+}
+
+extension Playlist: Comparable {
+    static func < (lhs: Playlist, rhs: Playlist) -> Bool {
+        return lhs.creationDate < rhs.creationDate
+    }
+}
+
+extension Playlist {
+    init(spotifyPlaylist: SpotifyPlaylist) {
+        self.spotifyId = spotifyPlaylist.id
+        self.name = spotifyPlaylist.name
+        self.spotifySnapshotId = spotifyPlaylist.snapshotId
+        self.creationDate = Date()
     }
 }
 
@@ -44,6 +61,16 @@ extension Track: Codable { }
 extension Track: Equatable {
     static func == (lhs: Track, rhs: Track) -> Bool {
         return lhs.spotifyId == rhs.spotifyId
+    }
+}
+
+extension Track {
+    init?(spotifyTrack: SpotifyTrack) {
+        guard let spotifyId = spotifyTrack.id else { return nil }
+        
+        self.spotifyId = spotifyId
+        self.name = spotifyTrack.name
+        self.artistName = spotifyTrack.artists.map { $0.name }.joined(separator: ", ")
     }
 }
 

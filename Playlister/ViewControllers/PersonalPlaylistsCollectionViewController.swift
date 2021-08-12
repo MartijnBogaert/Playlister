@@ -16,16 +16,37 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
     var model = Model()
     
     enum ViewModel {
-        enum Section: Hashable {
+        enum Section: Hashable, Comparable {
+            case saved
             case spotify
+            
+            static func < (lhs: Section, rhs: Section) -> Bool {
+                switch (lhs, rhs) {
+                case (.saved, _):
+                    return true
+                default:
+                    return false
+                }
+            }
         }
         
-        enum Item: Hashable {
+        enum Item: Hashable, Comparable {
+            case savedPlaylist(_ playlist: Playlist)
             case spotifyPlaylist(_ playlist: SpotifyPlaylist)
+            
+            static func < (lhs: Item, rhs: Item) -> Bool {
+                switch (lhs, rhs) {
+                case (.savedPlaylist(let lPlaylist), .savedPlaylist(let rPlaylist)):
+                    return lPlaylist < rPlaylist
+                default:
+                    return true
+                }
+            }
         }
     }
     
     struct Model {
+        var savedPlaylists = [Playlist]()
         var spotifyPlaylists = [SpotifyPlaylist]()
     }
 
@@ -35,11 +56,19 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
         dataSource = createDataSource()
         collectionView.dataSource = dataSource
         collectionView.collectionViewLayout = createLayout()
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         update()
     }
     
     func update() {
+        if let savedPlaylists = Storage.shared.personalPlaylists {
+            model.savedPlaylists = Array(savedPlaylists)
+        } else {
+            model.savedPlaylists = []
+        }
+        
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPersonalPlaylistsRequest(accessToken: token).send { result in
                 switch result {
@@ -55,27 +84,52 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
             }
         } else {
             model.spotifyPlaylists = []
-            updateCollectionView()
         }
+        
+        updateCollectionView()
     }
     
     func updateCollectionView() {
-        var sectionIDs = [ViewModel.Section]()
         var itemsBySection = [ViewModel.Section: [ViewModel.Item]]()
         
-        sectionIDs.append(.spotify)
-        itemsBySection[.spotify] = model.spotifyPlaylists.map({ .spotifyPlaylist($0) })
+        if !model.savedPlaylists.isEmpty {
+            itemsBySection[.saved] = model.savedPlaylists.map { .savedPlaylist($0) }.sorted()
+        }
         
-        dataSource.applySnapshotUsing(sectionIDs: sectionIDs, itemsBySection: itemsBySection)
+        let spotifyPlaylists = model.spotifyPlaylists.reduce(into: [ViewModel.Item]()) { partial, spotifyPlaylist in
+            if !model.savedPlaylists.contains(where: { $0.spotifyId == spotifyPlaylist.id }) {
+                partial.append(.spotifyPlaylist(spotifyPlaylist))
+            }
+        }
+        
+        if !spotifyPlaylists.isEmpty {
+            itemsBySection[.spotify] = spotifyPlaylists
+        }
+        
+        dataSource.applySnapshotUsing(sectionIDs: itemsBySection.keys.sorted(), itemsBySection: itemsBySection)
     }
     
     func createDataSource() -> DataSourceType {
         let dataSource = DataSourceType(collectionView: collectionView) { collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpotifyPlaylist", for: indexPath) as! PlaylistCollectionViewCell
+            let cell: PlaylistCollectionViewCell
             
-            if case .spotifyPlaylist(let playlist) = item {
+            switch item {
+            case .savedPlaylist(let playlist):
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SavedPlaylist", for: indexPath) as! PlaylistCollectionViewCell
+                
                 cell.titleLabel.text = playlist.name
                 cell.coverImageView.image = UIImage(systemName: "music.note.list")
+            case .spotifyPlaylist(let playlist):
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpotifyPlaylist", for: indexPath) as! PlaylistCollectionViewCell
+                
+                cell.titleLabel.text = playlist.name
+                cell.coverImageView.image = UIImage(systemName: "music.note.list")
+                
+                if indexPath.row + 1 == collectionView.numberOfItems(inSection: indexPath.section) {
+                    cell.separatorLineView?.isHidden = true
+                } else {
+                    cell.separatorLineView?.isHidden = false
+                }
                 
                 if let spotifyImage = playlist.images.last {
                     SpotifyImageRequest(fromURL: spotifyImage.url)?.send(completion: { result in
@@ -96,14 +150,25 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
     func createLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { sectionIndex, environment in
             switch self.dataSource.snapshot().sectionIdentifiers[sectionIndex] {
+            case .saved:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+                section.interGroupSpacing = 10
+                
+                return section
             case .spotify:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-                group.interItemSpacing = .fixed(0)
-                group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
@@ -135,7 +200,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
         }
     }
 
-    @IBAction func unwindFromUserDetailsViewController(unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwind(unwindSegue: UIStoryboardSegue) {
         update()
     }
     
@@ -147,8 +212,10 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
         else { return nil }
         
         switch item {
+        case.savedPlaylist(let savedPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: savedPlaylist, coverURL: nil)
         case .spotifyPlaylist(let spotifyPlaylist):
-            return PlaylistDetailsViewController(coder: coder, playlist: spotifyPlaylist.convertToPlaylist(), coverURL: spotifyPlaylist.images.first?.url)
+            return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url)
         }
         
     }

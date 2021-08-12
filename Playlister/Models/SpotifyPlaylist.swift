@@ -35,12 +35,6 @@ extension SpotifyPlaylist: Hashable {
     }
 }
 
-extension SpotifyPlaylist {
-    func convertToPlaylist() -> Playlist {
-        return Playlist(spotifyId: id, name: name, spotifySnapshotId: snapshotId)
-    }
-}
-
 // MARK: SpotifyImageObject
 
 struct SpotifyImageObject {
