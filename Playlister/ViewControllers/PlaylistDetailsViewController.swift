@@ -35,6 +35,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         
         title = playlist.name
         progressViewHeight.constant = 0
+        updateUI()
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, accessToken: token).send { result in
@@ -102,11 +103,12 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    @IBAction func saveButtonTouched(_ sender: UIBarButtonItem) {
+    @objc func saveButtonTouched() {
         let unconvertedOrFailedTracks = playlist.tracks.filter({ $0.conversionState != .converted })
         
         if !unconvertedOrFailedTracks.isEmpty, let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid {
             var numberOfConvertedOrFailedTracks = 0
+            var tracksToAddToPlaylist = [Track]()
             
             progressView.progress = 0.0
             progressViewHeight.constant = 4
@@ -127,6 +129,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                             updatedTrack.name = appleMusicTrack.attributes?.name ?? ""
                             updatedTrack.artistName = appleMusicTrack.attributes?.artistName ?? ""
                             updatedTrack.conversionState = .converted
+                            tracksToAddToPlaylist.append(updatedTrack)
                         } else {
                             updatedTrack.appleMusicId = nil
                             updatedTrack.conversionState = .failed
@@ -139,7 +142,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                             let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
                             if progress == 1.0 {
                                 self.progressViewHeight.constant = 0
-                                self.createLibraryPlaylist()
+                                self.createLibraryPlaylist(from: tracksToAddToPlaylist)
                             } else {
                                 self.progressView.progress = progress
                             }
@@ -152,15 +155,44 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
-    private func createLibraryPlaylist() {
-        if let developerToken = Storage.shared.appleDeveloperToken, developerToken.isValid, let musicUserToken = Storage.shared.appleMusicUserToken, musicUserToken.isValid {
-            AppleMusicPlaylistCreationRequest(
-                playlist: AppleMusicPlaylistCreationObject(playlist: playlist),
-                developerToken: developerToken.token,
-                musicUserToken: musicUserToken.token
-            ).sendForDebugging { string in
-                print(string)
+    private func createLibraryPlaylist(from tracks: [Track]) {
+        if !tracks.isEmpty,
+           let developerToken = Storage.shared.appleDeveloperToken,
+           developerToken.isValid,
+           let musicUserToken = Storage.shared.appleMusicUserToken,
+           musicUserToken.isValid {
+            
+            if let playlistId = playlist.appleMusicId {
+                AppleMusicPlaylistUpdateRequest(
+                    newTracks: AppleMusicPlaylistTrackContainer(tracks: tracks),
+                    playlistId: playlistId,
+                    developerToken: developerToken.token,
+                    musicUserToken: musicUserToken.token
+                ).send { _ in }
+            } else {
+                AppleMusicPlaylistCreationRequest(
+                    playlist: AppleMusicPlaylistCreationObject(name: playlist.name, description: "Created using Playlister", tracks: tracks),
+                    developerToken: developerToken.token,
+                    musicUserToken: musicUserToken.token
+                ).send { result in
+                    if case .success(let response) = result {
+                        self.playlist.appleMusicId = response.createdPlaylists.first?.id
+                        
+                        DispatchQueue.main.async {
+                            self.updateUI()
+                        }
+                    }
+                }
             }
+            
+        }
+    }
+    
+    private func updateUI() {
+        if let _ = playlist.appleMusicId {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(saveButtonTouched))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTouched))
         }
     }
     

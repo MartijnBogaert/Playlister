@@ -17,14 +17,8 @@ struct AppleMusicPlaylistCreationObject {
 extension AppleMusicPlaylistCreationObject: Codable { }
 
 extension AppleMusicPlaylistCreationObject {
-    init(playlist: Playlist) {
-        self.attributes = AppleMusicPlaylistAttributes(name: playlist.name, description: "Created using Playlister")
-        
-        let tracks = playlist.tracks.reduce(into: [AppleMusicPlaylistTrack]()) { partial, track in
-            if let id = track.appleMusicId {
-                partial.append(AppleMusicPlaylistTrack(id: id, type: "songs"))
-            }
-        }
+    init(name: String, description: String, tracks: [Track]) {
+        self.attributes = AppleMusicPlaylistAttributes(name: name, description: description)
         self.relationships = AppleMusicPlaylistRelationships(trackContainer: AppleMusicPlaylistTrackContainer(tracks: tracks))
     }
 }
@@ -59,6 +53,17 @@ struct AppleMusicPlaylistTrackContainer {
 extension AppleMusicPlaylistTrackContainer: Codable {
     enum CodingKeys: String, CodingKey {
         case tracks = "data"
+    }
+}
+
+extension AppleMusicPlaylistTrackContainer {
+    init(tracks: [Track]) {
+        let playlistTracks = tracks.reduce(into: [AppleMusicPlaylistTrack]()) { partial, track in
+            if let id = track.appleMusicId {
+                partial.append(AppleMusicPlaylistTrack(id: id, type: "songs"))
+            }
+        }
+        self.tracks = playlistTracks
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  AppleMusicSearchResponse.swift
+//  AppleMusicResponse.swift
 //  Playlister
 //
 //  Created by Martijn Bogaert on 10/08/2021.
@@ -26,3 +26,23 @@ extension AppleMusicResults: Codable {
         case tracksSearchResult = "songs"
     }
 }
+
+// MARK: AppleMusicPlaylistCreationResponse
+
+struct AppleMusicPlaylistCreationResponse {
+    let createdPlaylists: [AppleMusicCreatedPlaylist]
+}
+
+extension AppleMusicPlaylistCreationResponse: Codable {
+    enum CodingKeys: String, CodingKey {
+        case createdPlaylists = "data"
+    }
+}
+
+// MARK: AppleMusicCreatedPlaylist
+
+struct AppleMusicCreatedPlaylist {
+    let id: String
+}
+
+extension AppleMusicCreatedPlaylist: Codable { }

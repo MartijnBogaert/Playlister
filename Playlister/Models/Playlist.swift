@@ -1,5 +1,5 @@
 //
-//  LocalPlaylist.swift
+//  Playlist.swift
 //  Playlister
 //
 //  Created by Martijn Bogaert on 04/08/2021.
@@ -11,6 +11,7 @@ import Foundation
 
 struct Playlist {
     let spotifyId: String
+    var appleMusicId: String?
     let name: String
     let spotifySnapshotId: String
     var tracks: [Track] = []

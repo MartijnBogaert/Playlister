@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZSC-jx-zSb">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -383,11 +383,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Playlist" largeTitleDisplayMode="never" id="9np-js-kEY">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4Db-fs-M1K">
-                            <connections>
-                                <action selector="saveButtonTouched:" destination="Zqc-mu-HmF" id="c0u-Ox-Hnl"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="4Db-fs-M1K"/>
                     </navigationItem>
                     <connections>
                         <outlet property="coverImageView" destination="sg7-Q9-duH" id="Rov-su-SGn"/>

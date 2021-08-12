@@ -70,6 +70,29 @@ extension APIRequest where Response: Decodable {
     }
 }
 
+enum EmptyResponseError: Error {
+    case unsuccessfulRequest
+    case unknownProblem
+}
+
+extension APIRequest where Response == Void {
+    func send(completion: @escaping (Result<URLResponse, Error>) -> Void) {
+        URLSession.shared.dataTask(with: request) { _, urlResponse, error in
+            if let urlResponse = urlResponse, let httpUrlResponse = urlResponse as? HTTPURLResponse {
+                if 200 ..< 300 ~= httpUrlResponse.statusCode {
+                    completion(.success(urlResponse))
+                } else {
+                    completion(.failure(EmptyResponseError.unsuccessfulRequest))
+                }
+            } else if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.failure(EmptyResponseError.unknownProblem))
+            }
+        }.resume()
+    }
+}
+
 extension APIRequest {
     func sendForDebugging(completion: @escaping (String) -> Void) {
         URLSession.shared.dataTask(with: request) { data, urlResponse, error in
