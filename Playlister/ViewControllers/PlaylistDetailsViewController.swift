@@ -166,14 +166,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         numberOfConvertedOrFailedTracks += 1
                         
                         DispatchQueue.main.async {
-                            let progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
-                            
-                            if progress == 1.0 {
-                                self.progressViewHeight.constant = 0
-                            } else {
-                                self.progressView.progress = progress
-                            }
-                            
+                            self.progressView.progress = Float(numberOfConvertedOrFailedTracks) / Float(unconvertedOrFailedTracks.count)
                             self.tableView.reloadData()
                         }
                         
@@ -184,6 +177,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
             
             group.notify(queue: .main) {
                 self.addPlaylistToLibrary()
+                self.progressViewHeight.constant = 0
             }
         } else {
             addPlaylistToLibrary()
