@@ -52,7 +52,7 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
                             // Request device's Apple Music capabilities
                             controller.requestCapabilities { capabilities, _ in
                                 // Check if Apple Music tracks can be played and added to library
-                                if capabilities.contains(.musicCatalogPlayback) && capabilities.contains(.addToCloudMusicLibrary) {
+                                if capabilities.contains(.musicCatalogPlayback) {
                                     
                                     // Apple Music is set up -> Store User Music Token
                                     Storage.shared.appleMusicUserToken = AppleToken(token: musicUserToken)

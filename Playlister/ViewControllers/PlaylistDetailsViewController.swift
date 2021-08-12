@@ -7,11 +7,13 @@
 
 import UIKit
 import SafariServices
+import MediaPlayer
 
 class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SFSafariViewControllerDelegate {
     
     var playlist: Playlist!
     var coverURL: String?
+    var musicPlayerController: MPMusicPlayerController?
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var progressView: UIProgressView!
@@ -91,15 +93,34 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
-        urlComponents.host = "open.spotify.com"
-        urlComponents.path = "/track/\(playlist.tracks[indexPath.row].spotifyId)"
+        let track = playlist.tracks[indexPath.row]
+        if let _ = track.appleMusicId {
+            if musicPlayerController == nil {
+                musicPlayerController = MPMusicPlayerController.systemMusicPlayer
+            }
+            
+            let storeIds = playlist.tracks[indexPath.row...].reduce(into: [String](), { partial, track in
+                if let id = track.appleMusicId {
+                    print(track.name)
+                    partial.append(id)
+                }
+            })
+            let queue  = MPMusicPlayerStoreQueueDescriptor(storeIDs: storeIds)
+            
+            musicPlayerController!.shuffleMode = MPMusicShuffleMode.off
+            musicPlayerController!.setQueue(with: queue)
+            musicPlayerController!.play()
+        } else {
+            var urlComponents = URLComponents()
+            urlComponents.scheme = "https"
+            urlComponents.host = "open.spotify.com"
+            urlComponents.path = "/track/\(track.spotifyId)"
 
-        if let url = urlComponents.url {
-            let safariViewController = SFSafariViewController(url: url)
-            safariViewController.delegate = self
-            present(safariViewController, animated: true)
+            if let url = urlComponents.url {
+                let safariViewController = SFSafariViewController(url: url)
+                safariViewController.delegate = self
+                present(safariViewController, animated: true)
+            }
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
