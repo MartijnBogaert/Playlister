@@ -51,7 +51,8 @@ extension Track: Equatable {
 
 enum TrackConversionState: Int {
     case unconverted
-    case converted
+    case convertedAndNotSaved
+    case convertedAndSaved
     case failed
 }
 
