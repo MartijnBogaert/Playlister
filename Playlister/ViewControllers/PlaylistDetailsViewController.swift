@@ -65,14 +65,18 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
         
-        if let coverURL = coverURL {
-            SpotifyImageRequest(fromURL: coverURL)?.send(completion: { result in
-                if case .success(let image) = result {
+        if let data = storedPlaylist?.coverImageData {
+            coverImageView.image = UIImage(data: data)
+        } else if let coverURL = coverURL {
+            SpotifyDataRequest(fromURL: coverURL)?.send { result in
+                if case .success(let data) = result {
+                    self.playlist.coverImageData = data
+                    
                     DispatchQueue.main.async {
-                        self.coverImageView.image = image
+                        self.coverImageView.image = UIImage(data: data)
                     }
                 }
-            })
+            }
         }
     }
     

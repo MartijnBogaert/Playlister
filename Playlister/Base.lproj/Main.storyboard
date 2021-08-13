@@ -42,55 +42,53 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SavedPlaylist" id="CDf-pH-ISw" customClass="PlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
-                                <rect key="frame" x="95" y="0.0" width="200" height="200"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SavedPlaylist" id="CDf-pH-ISw" customClass="SavedPlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
+                                <rect key="frame" x="120" y="0.0" width="150" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zht-6g-9Ea">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vLm-0Z-rUb">
-                                            <rect key="frame" x="0.0" y="1" width="200" height="198.66666666666666"/>
-                                            <color key="tintColor" systemColor="systemFillColor"/>
-                                        </imageView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wkV-jp-5mR">
-                                            <rect key="frame" x="0.0" y="150" width="200" height="50"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-62-6VU">
-                                                    <rect key="frame" x="10" y="10" width="180" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" systemColor="systemBackgroundColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" systemColor="secondaryLabelColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="cJy-62-6VU" secondAttribute="trailing" constant="10" id="3mv-3v-aR3"/>
-                                                <constraint firstItem="cJy-62-6VU" firstAttribute="leading" secondItem="wkV-jp-5mR" secondAttribute="leading" constant="10" id="ArO-Nt-MAf"/>
-                                                <constraint firstItem="cJy-62-6VU" firstAttribute="top" secondItem="wkV-jp-5mR" secondAttribute="top" constant="10" id="JVg-lD-RD5"/>
-                                                <constraint firstAttribute="height" constant="50" id="TmI-Mt-seD"/>
-                                                <constraint firstAttribute="bottom" secondItem="cJy-62-6VU" secondAttribute="bottom" constant="10" id="Vp6-uw-Obm"/>
-                                            </constraints>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89a-qd-ufb" userLabel="Title Background">
+                                            <rect key="frame" x="0.0" y="150" width="150" height="50"/>
+                                            <color key="backgroundColor" systemColor="systemFillColor"/>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJy-62-6VU">
+                                            <rect key="frame" x="4" y="152" width="142" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vLm-0Z-rUb">
+                                            <rect key="frame" x="0.0" y="1" width="150" height="148.66666666666666"/>
+                                            <color key="tintColor" systemColor="systemFillColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="vLm-0Z-rUb" secondAttribute="height" multiplier="1:1" id="kdR-Lp-tmV"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="vLm-0Z-rUb" firstAttribute="leading" secondItem="zht-6g-9Ea" secondAttribute="leading" id="7Pr-N7-OxL"/>
-                                        <constraint firstItem="wkV-jp-5mR" firstAttribute="leading" secondItem="zht-6g-9Ea" secondAttribute="leading" id="K3P-Kc-B4B"/>
-                                        <constraint firstAttribute="bottom" secondItem="wkV-jp-5mR" secondAttribute="bottom" id="Nva-Mw-b4d"/>
+                                        <constraint firstItem="89a-qd-ufb" firstAttribute="top" secondItem="vLm-0Z-rUb" secondAttribute="bottom" id="9xc-6T-Vpz"/>
+                                        <constraint firstAttribute="bottom" secondItem="cJy-62-6VU" secondAttribute="bottom" constant="4" id="BGX-98-ta9"/>
+                                        <constraint firstItem="89a-qd-ufb" firstAttribute="leading" secondItem="zht-6g-9Ea" secondAttribute="leading" id="Eyy-ks-tOF"/>
+                                        <constraint firstItem="cJy-62-6VU" firstAttribute="top" secondItem="vLm-0Z-rUb" secondAttribute="bottom" constant="2" id="RDW-9f-sMY"/>
                                         <constraint firstAttribute="trailing" secondItem="vLm-0Z-rUb" secondAttribute="trailing" id="boe-YU-Zab"/>
-                                        <constraint firstAttribute="bottom" secondItem="vLm-0Z-rUb" secondAttribute="bottom" id="odE-qr-Esc"/>
+                                        <constraint firstAttribute="bottom" secondItem="89a-qd-ufb" secondAttribute="bottom" id="fWx-Vx-Vyq"/>
+                                        <constraint firstAttribute="trailing" secondItem="cJy-62-6VU" secondAttribute="trailing" constant="4" id="oNj-1i-7OW"/>
+                                        <constraint firstItem="cJy-62-6VU" firstAttribute="leading" secondItem="zht-6g-9Ea" secondAttribute="leading" constant="4" id="tak-qO-Qb9"/>
+                                        <constraint firstAttribute="trailing" secondItem="89a-qd-ufb" secondAttribute="trailing" id="tzK-OJ-JU9"/>
                                         <constraint firstItem="vLm-0Z-rUb" firstAttribute="top" secondItem="zht-6g-9Ea" secondAttribute="top" id="udK-Dc-dH0"/>
-                                        <constraint firstAttribute="trailing" secondItem="wkV-jp-5mR" secondAttribute="trailing" id="zo0-l9-pyh"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <size key="customSize" width="200" height="200"/>
+                                <size key="customSize" width="150" height="200"/>
                                 <connections>
                                     <outlet property="coverImageView" destination="vLm-0Z-rUb" id="Tm8-jR-kf0"/>
                                     <outlet property="titleLabel" destination="cJy-62-6VU" id="qYr-fL-Pr0"/>
                                     <segue destination="Zqc-mu-HmF" kind="show" destinationCreationSelector="showPlaylistDetails:sender:" id="6D2-X0-sjS"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpotifyPlaylist" id="jxF-LY-IP6" customClass="PlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpotifyPlaylist" id="jxF-LY-IP6" customClass="SpotifyPlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="210" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="RgK-2A-oC4">
@@ -144,8 +142,8 @@
                                 <size key="customSize" width="414" height="80"/>
                                 <connections>
                                     <outlet property="coverImageView" destination="NZf-pG-GUU" id="1lU-Ab-P3y"/>
-                                    <outlet property="separatorLineHeightConstraint" destination="Ih0-W4-ozn" id="85l-Gz-2Ph"/>
-                                    <outlet property="separatorLineView" destination="m78-ea-hDJ" id="4ZY-Qb-H2B"/>
+                                    <outlet property="separatorLineHeightConstraint" destination="Ih0-W4-ozn" id="EtY-xV-31a"/>
+                                    <outlet property="separatorLineView" destination="m78-ea-hDJ" id="K3d-Wk-P6K"/>
                                     <outlet property="titleLabel" destination="1Kt-bO-u7V" id="UGg-GO-i7N"/>
                                     <segue destination="Zqc-mu-HmF" kind="show" destinationCreationSelector="showPlaylistDetails:sender:" id="JeY-82-cys"/>
                                 </connections>
@@ -473,9 +471,6 @@
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

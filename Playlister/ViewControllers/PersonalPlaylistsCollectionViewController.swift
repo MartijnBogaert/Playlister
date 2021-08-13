@@ -111,38 +111,42 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
     
     func createDataSource() -> DataSourceType {
         let dataSource = DataSourceType(collectionView: collectionView) { collectionView, indexPath, item in
-            let cell: PlaylistCollectionViewCell
-            
             switch item {
             case .savedPlaylist(let playlist):
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SavedPlaylist", for: indexPath) as! PlaylistCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SavedPlaylist", for: indexPath) as! SavedPlaylistCollectionViewCell
                 
                 cell.titleLabel.text = playlist.name
                 cell.coverImageView.image = UIImage(systemName: "music.note.list")
+                
+                if let data = playlist.coverImageData {
+                    cell.coverImageView.image = UIImage(data: data)
+                }
+                
+                return cell
             case .spotifyPlaylist(let playlist):
-                cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpotifyPlaylist", for: indexPath) as! PlaylistCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SpotifyPlaylist", for: indexPath) as! SpotifyPlaylistCollectionViewCell
                 
                 cell.titleLabel.text = playlist.name
                 cell.coverImageView.image = UIImage(systemName: "music.note.list")
                 
                 if indexPath.row + 1 == collectionView.numberOfItems(inSection: indexPath.section) {
-                    cell.separatorLineView?.isHidden = true
+                    cell.separatorLineView.isHidden = true
                 } else {
-                    cell.separatorLineView?.isHidden = false
+                    cell.separatorLineView.isHidden = false
                 }
                 
-                if let spotifyImage = playlist.images.last {
-                    SpotifyImageRequest(fromURL: spotifyImage.url)?.send(completion: { result in
+                if let spotifyImage = playlist.images.first {
+                    SpotifyImageRequest(fromURL: spotifyImage.url)?.send { result in
                         if case .success(let image) = result {
                             DispatchQueue.main.async {
                                 cell.coverImageView.image = image
                             }
                         }
-                    })
+                    }
                 }
+                
+                return cell
             }
-            
-            return cell
         }
         return dataSource
     }
@@ -154,12 +158,12 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(200))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(150), heightDimension: .absolute(200))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
                 section.interGroupSpacing = 10
                 
                 return section

@@ -124,6 +124,20 @@ struct SpotifyImageRequest: APIRequest {
     var path: String { url.path }
 }
 
+struct SpotifyDataRequest: APIRequest {
+    typealias Response = Data
+    
+    init?(fromURL urlString: String) {
+        guard let url = URLComponents(string: urlString) else { return nil }
+        self.url = url
+    }
+    
+    var url: URLComponents
+    
+    var host: String { url.host ?? "mosaic.scdn.co" }
+    var path: String { url.path }
+}
+
 struct SpotifyPlaylistTracksRequest: APIRequest {
     typealias Response = SpotifyPagingObject<SpotifyTrackContainer>
     

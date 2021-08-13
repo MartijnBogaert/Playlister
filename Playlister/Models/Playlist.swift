@@ -17,6 +17,7 @@ struct Playlist {
     
     var appleMusicId: String?
     var tracks: [Track] = []
+    var coverImageData: Data?
 }
 
 extension Playlist: Codable { }
