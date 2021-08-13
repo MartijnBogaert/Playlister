@@ -56,6 +56,7 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
         dataSource = createDataSource()
         collectionView.dataSource = dataSource
         collectionView.collectionViewLayout = createLayout()
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,6 +149,19 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
                 return cell
             }
         }
+        
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath -> UICollectionReusableView? in
+            let snapshot = dataSource.snapshot()
+            
+            if case SupplementaryViewKind.header = kind, case .spotify = snapshot.sectionIdentifiers[indexPath.section], let _ = snapshot.indexOfSection(.saved) {
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: SupplementaryViewKind.header, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
+                headerView.titleLable.text = "Spotify"
+                return headerView
+            }
+            
+            return nil
+        }
+        
         return dataSource
     }
     
@@ -177,6 +191,14 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0)
                 section.interGroupSpacing = 0
+                
+                if let _ = self.dataSource.snapshot().indexOfSection(.saved) {
+                    let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(29))
+                    let headerItem = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerItemSize, elementKind: SupplementaryViewKind.header, alignment: .top)
+                    headerItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+                    section.boundarySupplementaryItems = [headerItem]
+                    section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 20, trailing: 0)
+                }
                 
                 return section
             }
@@ -221,6 +243,9 @@ class PersonalPlaylistsCollectionViewController: UICollectionViewController, SFS
         case .spotifyPlaylist(let spotifyPlaylist):
             return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url)
         }
-        
+    }
+    
+    enum SupplementaryViewKind {
+        static let header = "header"
     }
 }
