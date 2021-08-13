@@ -39,7 +39,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         progressViewHeight.constant = 0
         updateUI()
         
-        let storedPlaylist = Storage.shared.personalPlaylists?.first { $0.spotifyId == playlist.spotifyId }
+        let storedPlaylist = Storage.shared.personalPlaylists.first { $0.spotifyId == playlist.spotifyId }
         playlist.tracks = storedPlaylist?.tracks ?? []
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
@@ -212,7 +212,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         self.tableView.reloadData()
                     }
                     
-                    Storage.shared.personalPlaylists?.update(with: self.playlist)
+                    Storage.shared.personalPlaylists.update(with: self.playlist)
                 }
                 
                 if let playlistId = playlist.appleMusicId {

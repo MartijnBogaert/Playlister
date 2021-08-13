@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZSC-jx-zSb">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="dark"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
@@ -155,7 +155,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Personal Playlists" id="v5K-aJ-XK5">
-                        <barButtonItem key="rightBarButtonItem" title="User" image="person.circle" catalog="system" id="VGE-WZ-yJU">
+                        <barButtonItem key="leftBarButtonItem" title="User" image="person.circle" catalog="system" id="VGE-WZ-yJU">
                             <connections>
                                 <segue destination="Qh7-8p-0hu" kind="presentation" id="lDw-sG-Z0Q"/>
                             </connections>
@@ -224,7 +224,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFj-8f-OfR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2iE-c9-UuT" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-100" y="-913"/>
+            <point key="canvasLocation" x="-100" y="-669"/>
         </scene>
         <!--Public-->
         <scene sceneID="Myk-oI-kIc">
@@ -258,15 +258,110 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wSO-L7-U2p">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3kp-oc-XbG">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="SavedPlaylist" id="L3Z-ov-jD5" customClass="SavedPlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
+                                <rect key="frame" x="120" y="0.0" width="150" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yxN-Fa-uZF">
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQl-kb-bHL" userLabel="Title Background">
+                                            <rect key="frame" x="0.0" y="150" width="150" height="50"/>
+                                            <color key="backgroundColor" systemColor="systemFillColor"/>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eI7-Lp-0cz">
+                                            <rect key="frame" x="4" y="152" width="142" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-2T-5bA">
+                                            <rect key="frame" x="0.0" y="1" width="150" height="148.66666666666666"/>
+                                            <color key="tintColor" systemColor="systemFillColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="lgB-2T-5bA" secondAttribute="height" multiplier="1:1" id="sFW-h8-Ww3"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="eI7-Lp-0cz" secondAttribute="trailing" constant="4" id="0N7-nO-nnz"/>
+                                        <constraint firstItem="lgB-2T-5bA" firstAttribute="top" secondItem="yxN-Fa-uZF" secondAttribute="top" id="IjE-HO-tAh"/>
+                                        <constraint firstItem="eI7-Lp-0cz" firstAttribute="top" secondItem="lgB-2T-5bA" secondAttribute="bottom" constant="2" id="N4x-NU-0GU"/>
+                                        <constraint firstAttribute="bottom" secondItem="HQl-kb-bHL" secondAttribute="bottom" id="Ngv-W8-cmQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="eI7-Lp-0cz" secondAttribute="bottom" constant="4" id="OMb-DS-fan"/>
+                                        <constraint firstAttribute="trailing" secondItem="HQl-kb-bHL" secondAttribute="trailing" id="PqN-bF-ef2"/>
+                                        <constraint firstAttribute="trailing" secondItem="lgB-2T-5bA" secondAttribute="trailing" id="YUk-17-lVT"/>
+                                        <constraint firstItem="HQl-kb-bHL" firstAttribute="top" secondItem="lgB-2T-5bA" secondAttribute="bottom" id="Z9s-nB-Tgh"/>
+                                        <constraint firstItem="lgB-2T-5bA" firstAttribute="leading" secondItem="yxN-Fa-uZF" secondAttribute="leading" id="jPv-B1-foe"/>
+                                        <constraint firstItem="HQl-kb-bHL" firstAttribute="leading" secondItem="yxN-Fa-uZF" secondAttribute="leading" id="o0Z-MU-Chb"/>
+                                        <constraint firstItem="eI7-Lp-0cz" firstAttribute="leading" secondItem="yxN-Fa-uZF" secondAttribute="leading" constant="4" id="oh4-bz-51j"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
+                                <size key="customSize" width="150" height="200"/>
                                 <connections>
-                                    <segue destination="Zqc-mu-HmF" kind="show" id="8Ur-Ra-9tS"/>
+                                    <outlet property="coverImageView" destination="lgB-2T-5bA" id="Vl5-8A-ys8"/>
+                                    <outlet property="titleLabel" destination="eI7-Lp-0cz" id="Eoi-Oe-8aN"/>
+                                    <segue destination="Zqc-mu-HmF" kind="show" id="1wE-MJ-nha"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpotifyPlaylist" id="2KH-yI-bb1" customClass="SpotifyPlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="210" width="414" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qIe-Ql-uMU">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fhV-SO-wpk">
+                                            <rect key="frame" x="20" y="5" width="374" height="70"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YT8-wS-gIR">
+                                                    <rect key="frame" x="0.0" y="1" width="70" height="68.666666666666671"/>
+                                                    <color key="tintColor" systemColor="systemFillColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="YT8-wS-gIR" secondAttribute="height" multiplier="1:1" id="9l2-aV-B79"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQh-P9-Zws">
+                                                    <rect key="frame" x="78" y="0.0" width="296" height="70"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YT8-wS-gIR" firstAttribute="top" secondItem="fhV-SO-wpk" secondAttribute="top" id="7HN-hR-hhT"/>
+                                                <constraint firstAttribute="bottom" secondItem="YT8-wS-gIR" secondAttribute="bottom" id="Ftv-bQ-Wty"/>
+                                                <constraint firstAttribute="bottom" secondItem="wQh-P9-Zws" secondAttribute="bottom" id="JjK-Ls-93X"/>
+                                                <constraint firstItem="wQh-P9-Zws" firstAttribute="top" secondItem="fhV-SO-wpk" secondAttribute="top" id="P4B-Mn-dO9"/>
+                                                <constraint firstItem="YT8-wS-gIR" firstAttribute="leading" secondItem="fhV-SO-wpk" secondAttribute="leading" id="hMw-0t-MKX"/>
+                                                <constraint firstAttribute="trailing" secondItem="wQh-P9-Zws" secondAttribute="trailing" id="xQA-9h-brh"/>
+                                            </constraints>
+                                        </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VCd-5o-N2f">
+                                            <rect key="frame" x="98" y="79" width="316" height="1"/>
+                                            <color key="backgroundColor" systemColor="separatorColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="1" id="gxn-S4-r5n"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="VCd-5o-N2f" secondAttribute="trailing" id="80k-yX-2yB"/>
+                                        <constraint firstAttribute="bottom" secondItem="fhV-SO-wpk" secondAttribute="bottom" constant="5" id="Cl6-HB-y2L"/>
+                                        <constraint firstAttribute="trailing" secondItem="fhV-SO-wpk" secondAttribute="trailing" constant="20" id="Jgc-3N-LZc"/>
+                                        <constraint firstItem="fhV-SO-wpk" firstAttribute="top" secondItem="qIe-Ql-uMU" secondAttribute="top" constant="5" id="P36-WB-WJx"/>
+                                        <constraint firstItem="fhV-SO-wpk" firstAttribute="leading" secondItem="qIe-Ql-uMU" secondAttribute="leading" constant="20" id="lOW-SG-Y9l"/>
+                                        <constraint firstItem="VCd-5o-N2f" firstAttribute="leading" secondItem="wQh-P9-Zws" secondAttribute="leading" id="rFp-tg-XMW"/>
+                                        <constraint firstAttribute="bottom" secondItem="VCd-5o-N2f" secondAttribute="bottom" id="s1h-It-8jt"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="414" height="80"/>
+                                <connections>
+                                    <outlet property="coverImageView" destination="YT8-wS-gIR" id="44N-7g-yOl"/>
+                                    <outlet property="separatorLineHeightConstraint" destination="gxn-S4-r5n" id="N4S-Tn-Vxy"/>
+                                    <outlet property="separatorLineView" destination="VCd-5o-N2f" id="Hd6-Tm-PTq"/>
+                                    <outlet property="titleLabel" destination="wQh-P9-Zws" id="i5u-g0-4fU"/>
+                                    <segue destination="Zqc-mu-HmF" kind="show" id="ILY-b5-H4d"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -275,9 +370,16 @@
                             <outlet property="delegate" destination="aOD-ro-ZCJ" id="O0c-Ua-DLl"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Public Playlists" id="g47-i0-GkP">
+                        <barButtonItem key="leftBarButtonItem" title="User" image="person.circle" catalog="system" id="Zik-yz-UXP">
+                            <connections>
+                                <segue destination="Qh7-8p-0hu" kind="presentation" id="IdR-TC-ltn"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cb5-Uq-kLk"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L8v-K9-NUx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -440,7 +542,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yDO-3e-0Ue" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-100.44642857142857" y="-244.92753623188409"/>
+            <point key="canvasLocation" x="-100" y="36"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="W2X-ov-UUL">
@@ -463,7 +565,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="JeY-82-cys"/>
+        <segue reference="6D2-X0-sjS"/>
+        <segue reference="lDw-sG-Z0Q"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AppleMusicIcon" width="88" height="88"/>

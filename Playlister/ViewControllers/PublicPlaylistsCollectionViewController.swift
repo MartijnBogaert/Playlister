@@ -7,10 +7,17 @@
 
 import UIKit
 
-class PublicPlaylistsCollectionViewController: UICollectionViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController {
+    
+    override func update() {
+        model.savedPlaylists = Array(Storage.shared.publicPlaylists)
+        model.spotifyPlaylists = Array(Storage.shared.importedPlaylists)
+        
+        super.update()
+    }
+    
+    override func removeSavedPlaylist(_ playlist: Playlist) {
+        Storage.shared.publicPlaylists.remove(playlist)
     }
 
 }

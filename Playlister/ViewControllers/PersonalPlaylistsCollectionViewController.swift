@@ -10,11 +10,7 @@ import UIKit
 class PersonalPlaylistsCollectionViewController: PlaylistsCollectionViewController {
     
     override func update() {
-        if let savedPlaylists = Storage.shared.personalPlaylists {
-            model.savedPlaylists = Array(savedPlaylists)
-        } else {
-            model.savedPlaylists = []
-        }
+        model.savedPlaylists = Array(Storage.shared.personalPlaylists)
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
             SpotifyPersonalPlaylistsRequest(accessToken: token).send { result in
@@ -37,6 +33,6 @@ class PersonalPlaylistsCollectionViewController: PlaylistsCollectionViewControll
     }
     
     override func removeSavedPlaylist(_ playlist: Playlist) {
-        Storage.shared.personalPlaylists?.remove(playlist)
+        Storage.shared.personalPlaylists.remove(playlist)
     }
 }
