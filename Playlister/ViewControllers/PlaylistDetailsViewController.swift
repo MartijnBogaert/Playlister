@@ -114,7 +114,6 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
             
             let storeIds = playlist.tracks[indexPath.row...].reduce(into: [String](), { partial, track in
                 if let id = track.appleMusicId {
-                    print(track.name)
                     partial.append(id)
                 }
             })
