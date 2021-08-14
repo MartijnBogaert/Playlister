@@ -6,12 +6,13 @@
 //
 
 import UIKit
-import SafariServices
+//import SafariServices
 import StoreKit
+import AuthenticationServices
 
-class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegate, SKCloudServiceSetupViewControllerDelegate {
+class UserDetailsViewController: UIViewController, SKCloudServiceSetupViewControllerDelegate, ASWebAuthenticationPresentationContextProviding {
     
-    var safariViewController: SFSafariViewController?
+    //var safariViewController: SFSafariViewController?
     @IBOutlet weak var connectToSpotifyButton: UIButton!
     @IBOutlet weak var connectToAppleMusicButton: UIButton!
     
@@ -26,9 +27,30 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
             Storage.shared.removeByKey(Storage.Keys.spotifyTokens)
             updateUI()
         } else {
-            safariViewController = SFSafariViewController(url: SpotifyAuthorizationRequest().url)
-            safariViewController!.delegate = self
-            present(safariViewController!, animated: true)
+            let authenticationSession = ASWebAuthenticationSession(url: SpotifyAuthorizationRequest().url, callbackURLScheme: "playlister")
+            { callbackURL, error in
+                guard error == nil, let callbackURL = callbackURL else { return }
+
+                let queryItems = URLComponents(string: callbackURL.absoluteString)?.queryItems
+                
+                guard let code = queryItems?.filter({ $0.name == "code" }).first?.value else { return }
+                
+                SpotifyTokensRequest(code: code).send { result in
+                    if case .success(let tokens) = result {
+                        Storage.shared.spotifyTokens = SpotifyTokensStorage(
+                            accessToken: tokens.accessToken,
+                            refreshToken: tokens.refreshToken,
+                            accessTokenExpiresIn: tokens.accessTokenExpiresIn
+                        )
+                        
+                        DispatchQueue.main.async {
+                            self.updateUI()
+                        }
+                    }
+                }
+            }
+            authenticationSession.presentationContextProvider = self
+            authenticationSession.start()
         }
     }
     
@@ -73,25 +95,8 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
         }
     }
     
-    func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
-        if let url = URLComponents(url: URL, resolvingAgainstBaseURL: false),
-           url.host == "www.spotify.com", let code = url.queryItems?.first(where: { $0.name == "code" })?.value {
-            safariViewController?.dismiss(animated: true, completion: nil)
-            
-            SpotifyTokensRequest(code: code).send { result in
-                if case .success(let tokens) = result {
-                    Storage.shared.spotifyTokens = SpotifyTokensStorage(
-                        accessToken: tokens.accessToken,
-                        refreshToken: tokens.refreshToken,
-                        accessTokenExpiresIn: tokens.accessTokenExpiresIn
-                    )
-                    
-                    DispatchQueue.main.async {
-                        self.updateUI()
-                    }
-                }
-            }
-        }
+    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return view.window!
     }
     
     func updateUI() {

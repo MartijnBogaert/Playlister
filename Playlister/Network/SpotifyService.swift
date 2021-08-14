@@ -9,9 +9,10 @@ import UIKit
 
 private let clientId = "5d5fa918fe334462b607122c264f8686"
 private let clientSecret = "0f183b42d68e4b7f8a9f4f44e89953f5"
-private let redirectURI = "https://www.spotify.com/"
 
 struct SpotifyAuthorizationRequest: APIRequest {
+    static let callbackURL = "playlister://spotify-login-callback"
+    
     typealias Response = Void
     
     var host: String { "accounts.spotify.com" }
@@ -21,7 +22,7 @@ struct SpotifyAuthorizationRequest: APIRequest {
         
         queryItems.append(URLQueryItem(name: "client_id", value: clientId))
         queryItems.append(URLQueryItem(name: "response_type", value: "code"))
-        queryItems.append(URLQueryItem(name: "redirect_uri", value: redirectURI))
+        queryItems.append(URLQueryItem(name: "redirect_uri", value: SpotifyAuthorizationRequest.callbackURL))
         queryItems.append(URLQueryItem(name: "scope", value: "playlist-read-private,playlist-read-collaborative"))
         
         return queryItems
@@ -40,7 +41,7 @@ struct SpotifyTokensRequest: APIRequest {
         
         queryItems.append(URLQueryItem(name: "grant_type", value: "authorization_code"))
         queryItems.append(URLQueryItem(name: "code", value: code))
-        queryItems.append(URLQueryItem(name: "redirect_uri", value: redirectURI))
+        queryItems.append(URLQueryItem(name: "redirect_uri", value: SpotifyAuthorizationRequest.callbackURL))
         
         return queryItems
     }
