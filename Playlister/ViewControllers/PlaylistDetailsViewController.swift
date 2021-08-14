@@ -134,6 +134,8 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = playlist.tracks[indexPath.row]
         if let _ = track.appleMusicId {
+            tableView.deselectRow(at: indexPath, animated: true) // Otherwise very long highlight time due to slow music player preparation
+            
             if musicPlayerController == nil {
                 musicPlayerController = MPMusicPlayerController.systemMusicPlayer
             }
@@ -159,9 +161,9 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 safariViewController.delegate = self
                 present(safariViewController, animated: true)
             }
+            
+            tableView.deselectRow(at: indexPath, animated: true)
         }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     @objc func saveButtonTouched() {
