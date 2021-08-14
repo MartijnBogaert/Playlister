@@ -301,7 +301,7 @@
                                 <connections>
                                     <outlet property="coverImageView" destination="lgB-2T-5bA" id="Vl5-8A-ys8"/>
                                     <outlet property="titleLabel" destination="eI7-Lp-0cz" id="Eoi-Oe-8aN"/>
-                                    <segue destination="Zqc-mu-HmF" kind="show" id="1wE-MJ-nha"/>
+                                    <segue destination="Zqc-mu-HmF" kind="show" destinationCreationSelector="showPlaylistDetails:sender:" id="1wE-MJ-nha"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpotifyPlaylist" id="2KH-yI-bb1" customClass="SpotifyPlaylistCollectionViewCell" customModule="Playlister" customModuleProvider="target">
@@ -361,7 +361,7 @@
                                     <outlet property="separatorLineHeightConstraint" destination="gxn-S4-r5n" id="N4S-Tn-Vxy"/>
                                     <outlet property="separatorLineView" destination="VCd-5o-N2f" id="Hd6-Tm-PTq"/>
                                     <outlet property="titleLabel" destination="wQh-P9-Zws" id="i5u-g0-4fU"/>
-                                    <segue destination="Zqc-mu-HmF" kind="show" id="ILY-b5-H4d"/>
+                                    <segue destination="Zqc-mu-HmF" kind="show" destinationCreationSelector="showPlaylistDetails:sender:" id="ILY-b5-H4d"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -377,7 +377,11 @@
                                 <segue destination="Qh7-8p-0hu" kind="presentation" id="IdR-TC-ltn"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cb5-Uq-kLk"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cb5-Uq-kLk">
+                            <connections>
+                                <action selector="addPlaylistButtonTapped:" destination="aOD-ro-ZCJ" id="LlV-BJ-eDa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
@@ -394,7 +398,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lcO-O1-i1d">
-                                <rect key="frame" x="0.0" y="310" width="390" height="447"/>
+                                <rect key="frame" x="0.0" y="294" width="390" height="414"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Track" textLabel="BQs-dZ-HdQ" detailTextLabel="VFs-Pl-7Nd" imageView="imK-xs-XQS" style="IBUITableViewCellStyleSubtitle" id="K2j-zd-4Nr">
@@ -430,10 +434,10 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEw-2M-tZC" userLabel="Cover Container">
-                                <rect key="frame" x="0.0" y="88" width="390" height="222"/>
+                                <rect key="frame" x="0.0" y="88" width="390" height="206"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sg7-Q9-duH">
-                                        <rect key="frame" x="84" y="1" width="222" height="220.66666666666666"/>
+                                        <rect key="frame" x="92" y="1" width="206" height="204.66666666666666"/>
                                         <color key="tintColor" systemColor="systemFillColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="sg7-Q9-duH" secondAttribute="height" multiplier="1:1" id="Lkg-qs-f9i"/>
@@ -472,7 +476,7 @@
                                 </variation>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="kzU-L0-JEf">
-                                <rect key="frame" x="0.0" y="757" width="390" height="4"/>
+                                <rect key="frame" x="0.0" y="708" width="390" height="4"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="4" id="tng-o8-w6J"/>
                                 </constraints>
@@ -565,8 +569,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6D2-X0-sjS"/>
-        <segue reference="lDw-sG-Z0Q"/>
+        <segue reference="ILY-b5-H4d"/>
+        <segue reference="IdR-TC-ltn"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AppleMusicIcon" width="88" height="88"/>

@@ -163,3 +163,22 @@ struct SpotifyPlaylistTracksRequest: APIRequest {
         return request
     }
 }
+
+struct SpotifyPlaylistRequest: APIRequest {
+    typealias Response = SpotifyPlaylist
+    
+    var playlistId: String
+    var accessToken: String
+    
+    var host: String { "api.spotify.com" }
+    var path: String { "/v1/playlists/\(playlistId)" }
+    var queryItems: [URLQueryItem]? { [URLQueryItem(name: "fields", value: "id,name,snapshot_id,images(url,height,width)")] }
+    
+    var request: URLRequest {
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        return request
+    }
+}

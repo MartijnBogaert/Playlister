@@ -46,5 +46,3 @@ struct SpotifyImageObject {
 extension SpotifyImageObject: Codable { }
 
 extension SpotifyImageObject: Hashable { }
-
-
