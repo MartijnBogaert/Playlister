@@ -27,7 +27,7 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
     
     override func update() {
         model.savedPlaylists = Array(Storage.shared.publicPlaylists)
-        model.spotifyPlaylists = Array(Storage.shared.importedPlaylists)
+        model.spotifyPlaylists = Array(Storage.shared.importedPlaylists).reversed()
         
         super.update()
     }
@@ -40,7 +40,7 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
         if let spotifyTokens = Storage.shared.spotifyTokens, spotifyTokens.accessTokenIsValid {
             SpotifyPlaylistRequest(playlistId: id, accessToken: spotifyTokens.accessToken).send { result in
                 if case .success(let spotifyPlaylist) = result {
-                    Storage.shared.importedPlaylists.update(with: spotifyPlaylist)
+                    Storage.shared.importedPlaylists.updateOrAppend(spotifyPlaylist)
                     
                     DispatchQueue.main.async {
                         self.update()

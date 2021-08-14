@@ -30,6 +30,7 @@
 		E33EEFCE26BB374500D0C600 /* SpotifyTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFCD26BB374500D0C600 /* SpotifyTrack.swift */; };
 		E3763F7F26C6B1D600510C1D /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3763F7E26C6B1D600510C1D /* SectionHeaderView.swift */; };
 		E3763F8126C6FAF900510C1D /* PlaylistsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3763F8026C6FAF900510C1D /* PlaylistsCollectionViewController.swift */; };
+		E37CEA1E26C7D49E00F151F2 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E37CEA1D26C7D49E00F151F2 /* OrderedCollections */; };
 		E3AB622E26C5DC7C00AC5682 /* SpotifyPlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AB622D26C5DC7C00AC5682 /* SpotifyPlaylistCollectionViewCell.swift */; };
 		E3D0DCEE26C5DE8B00F7632F /* SavedPlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0DCED26C5DE8B00F7632F /* SavedPlaylistCollectionViewCell.swift */; };
 		E3FA6E9D26C1B7140033B97D /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = E3FA6E9C26C1B7140033B97D /* SwiftJWT */; };
@@ -103,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E37CEA1E26C7D49E00F151F2 /* OrderedCollections in Frameworks */,
 				E3FA6E9D26C1B7140033B97D /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +259,7 @@
 			name = Playlister;
 			packageProductDependencies = (
 				E3FA6E9C26C1B7140033B97D /* SwiftJWT */,
+				E37CEA1D26C7D49E00F151F2 /* OrderedCollections */,
 			);
 			productName = Playlister;
 			productReference = E30CADC626B7E1A3008B4B53 /* Playlister.app */;
@@ -331,6 +334,7 @@
 			mainGroup = E30CADBD26B7E1A3008B4B53;
 			packageReferences = (
 				E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				E37CEA1C26C7D49E00F151F2 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = E30CADC726B7E1A3008B4B53 /* Products */;
 			projectDirPath = "";
@@ -735,6 +739,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E37CEA1C26C7D49E00F151F2 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
 		E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kitura/Swift-JWT";
@@ -746,6 +758,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E37CEA1D26C7D49E00F151F2 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E37CEA1C26C7D49E00F151F2 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		E3FA6E9C26C1B7140033B97D /* SwiftJWT */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E3FA6E9B26C1B7130033B97D /* XCRemoteSwiftPackageReference "Swift-JWT" */;

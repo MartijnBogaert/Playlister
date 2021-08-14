@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let urlCache = URLCache(memoryCapacity: 25_000_000, diskCapacity: 50_000_000, diskPath: temporaryDirectory)
         URLCache.shared = urlCache
         
-        //Storage.shared.removeByKey(Storage.Keys.personalPlaylists)
-        
         // Refresh Spotify Access Token if necessary/possible
         if let tokens = Storage.shared.spotifyTokens, !tokens.accessTokenIsValid {
             SpotifyAccessTokenRequest(refreshToken: tokens.refreshToken).send { result in

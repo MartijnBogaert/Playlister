@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OrderedCollections
 
 struct Storage {
     static var shared = Storage()
@@ -78,13 +79,13 @@ struct Storage {
         }
     }
     
-    var importedPlaylists: Set<SpotifyPlaylist> {
+    var importedPlaylists: OrderedSet<SpotifyPlaylist> {
         get {
-            if let playlists: Set<SpotifyPlaylist> = unarchiveJSON(key: Keys.importedPlaylists) {
+            if let playlists: OrderedSet<SpotifyPlaylist> = unarchiveJSON(key: Keys.importedPlaylists) {
                 return playlists
             }
             
-            let emptySet = Set<SpotifyPlaylist>()
+            let emptySet = OrderedSet<SpotifyPlaylist>()
             archiveJSON(value: emptySet, key: Keys.importedPlaylists)
             
             return emptySet

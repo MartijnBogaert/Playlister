@@ -72,7 +72,7 @@ class PlaylistsCollectionViewController: UICollectionViewController, SFSafariVie
         var itemsBySection = [ViewModel.Section: [ViewModel.Item]]()
         
         if !model.savedPlaylists.isEmpty {
-            itemsBySection[.saved] = model.savedPlaylists.map { .savedPlaylist($0) }.sorted()
+            itemsBySection[.saved] = model.savedPlaylists.map { .savedPlaylist($0) }.sorted(by: >)
         }
         
         let spotifyPlaylists = model.spotifyPlaylists.reduce(into: [ViewModel.Item]()) { partial, spotifyPlaylist in
@@ -119,6 +119,10 @@ class PlaylistsCollectionViewController: UICollectionViewController, SFSafariVie
                         if case .success(let image) = result {
                             DispatchQueue.main.async {
                                 cell.coverImageView.image = image
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                cell.coverImageView.image = UIImage(systemName: "music.note.list")
                             }
                         }
                     }
