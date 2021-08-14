@@ -29,9 +29,6 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
         model.savedPlaylists = Array(Storage.shared.publicPlaylists)
         model.spotifyPlaylists = Array(Storage.shared.importedPlaylists)
         
-        print(model.savedPlaylists)
-        print(model.spotifyPlaylists)
-        
         super.update()
     }
     
@@ -81,6 +78,21 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
             addPlaylistAlert?.actions.last?.isEnabled = true
         } else {
             addPlaylistAlert?.actions.last?.isEnabled = false
+        }
+    }
+    
+    @IBSegueAction func showPlaylistDetails(_ coder: NSCoder, sender: UICollectionViewCell?) -> PlaylistDetailsViewController? {
+        guard
+            let cell = sender,
+            let indexPath = collectionView.indexPath(for: cell),
+            let item = dataSource.itemIdentifier(for: indexPath)
+        else { return nil }
+        
+        switch item {
+        case.savedPlaylist(let savedPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: savedPlaylist, coverURL: nil, storageSource: .publicPlaylists)
+        case .spotifyPlaylist(let spotifyPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url, storageSource: .publicPlaylists)
         }
     }
 }

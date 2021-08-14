@@ -35,4 +35,19 @@ class PersonalPlaylistsCollectionViewController: PlaylistsCollectionViewControll
     override func removeSavedPlaylist(_ playlist: Playlist) {
         Storage.shared.personalPlaylists.remove(playlist)
     }
+    
+    @IBSegueAction func showPlaylistDetails(_ coder: NSCoder, sender: UICollectionViewCell?) -> PlaylistDetailsViewController? {
+        guard
+            let cell = sender,
+            let indexPath = collectionView.indexPath(for: cell),
+            let item = dataSource.itemIdentifier(for: indexPath)
+        else { return nil }
+        
+        switch item {
+        case.savedPlaylist(let savedPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: savedPlaylist, coverURL: nil, storageSource: .personalPlaylists)
+        case .spotifyPlaylist(let spotifyPlaylist):
+            return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url, storageSource: .personalPlaylists)
+        }
+    }
 }

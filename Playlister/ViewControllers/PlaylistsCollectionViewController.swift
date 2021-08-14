@@ -227,21 +227,6 @@ class PlaylistsCollectionViewController: UICollectionViewController, SFSafariVie
         update()
     }
     
-    @IBSegueAction func showPlaylistDetails(_ coder: NSCoder, sender: UICollectionViewCell?) -> PlaylistDetailsViewController? {
-        guard
-            let cell = sender,
-            let indexPath = collectionView.indexPath(for: cell),
-            let item = dataSource.itemIdentifier(for: indexPath)
-        else { return nil }
-        
-        switch item {
-        case.savedPlaylist(let savedPlaylist):
-            return PlaylistDetailsViewController(coder: coder, playlist: savedPlaylist, coverURL: nil)
-        case .spotifyPlaylist(let spotifyPlaylist):
-            return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url)
-        }
-    }
-    
     enum SupplementaryViewKind {
         static let header = "header"
     }

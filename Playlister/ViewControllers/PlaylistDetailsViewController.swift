@@ -9,19 +9,45 @@ import UIKit
 import SafariServices
 import MediaPlayer
 
+enum StorageSource {
+    case personalPlaylists
+    case publicPlaylists
+}
+
 class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SFSafariViewControllerDelegate {
     
     var playlist: Playlist!
     var coverURL: String?
     var musicPlayerController: MPMusicPlayerController?
+    let storageSource: StorageSource
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
     
-    init?(coder: NSCoder, playlist: Playlist, coverURL: String?) {
+    var storedPlaylists: Set<Playlist> {
+        get {
+            switch storageSource {
+            case .personalPlaylists:
+                return Storage.shared.personalPlaylists
+            case .publicPlaylists:
+                return Storage.shared.publicPlaylists
+            }
+        }
+        set {
+            switch storageSource {
+            case .personalPlaylists:
+                Storage.shared.personalPlaylists = newValue
+            case .publicPlaylists:
+                Storage.shared.publicPlaylists = newValue
+            }
+        }
+    }
+    
+    init?(coder: NSCoder, playlist: Playlist, coverURL: String?, storageSource: StorageSource) {
         self.playlist = playlist
         self.coverURL = coverURL
+        self.storageSource = storageSource
         super.init(coder: coder)
     }
     
@@ -39,7 +65,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         progressViewHeight.constant = 0
         updateUI()
         
-        let storedPlaylist = Storage.shared.personalPlaylists.first { $0.spotifyId == playlist.spotifyId }
+        let storedPlaylist = storedPlaylists.first { $0.spotifyId == playlist.spotifyId }
         playlist.tracks = storedPlaylist?.tracks ?? []
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
@@ -212,7 +238,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         self.tableView.reloadData()
                     }
                     
-                    Storage.shared.personalPlaylists.update(with: self.playlist)
+                    storedPlaylists.update(with: self.playlist)
                 }
                 
                 if let playlistId = playlist.appleMusicId {
