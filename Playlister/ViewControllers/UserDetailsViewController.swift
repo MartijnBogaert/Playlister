@@ -41,16 +41,17 @@ class UserDetailsViewController: UIViewController, SFSafariViewControllerDelegat
             
             let controller = SKCloudServiceController()
             
-            // Request User Music Token
-            controller.requestUserToken(forDeveloperToken: developerToken.token) { musicUserToken, _ in
-                if let musicUserToken = musicUserToken {
+            // Request access to music library
+            SKCloudServiceController.requestAuthorization { status in
+                if case .authorized = status {
                     
-                    // Request access to music library
-                    SKCloudServiceController.requestAuthorization { status in
-                        if case .authorized = status {
+                    // Request User Music Token
+                    controller.requestUserToken(forDeveloperToken: developerToken.token) { musicUserToken, _ in
+                        if let musicUserToken = musicUserToken {
                             
                             // Request device's Apple Music capabilities
                             controller.requestCapabilities { capabilities, _ in
+                                
                                 // Check if Apple Music tracks can be played and added to library
                                 if capabilities.contains(.musicCatalogPlayback) {
                                     
