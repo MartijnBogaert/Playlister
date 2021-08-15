@@ -50,6 +50,7 @@ class UserDetailsViewController: UIViewController, SKCloudServiceSetupViewContro
                 }
             }
             authenticationSession.presentationContextProvider = self
+            authenticationSession.prefersEphemeralWebBrowserSession = true
             authenticationSession.start()
         }
     }
