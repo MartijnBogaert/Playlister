@@ -18,6 +18,7 @@
 		E30CADFD26B7F36A008B4B53 /* PublicPlaylistsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30CADFC26B7F36A008B4B53 /* PublicPlaylistsCollectionViewController.swift */; };
 		E30CADFF26B7F452008B4B53 /* PlaylistDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30CADFE26B7F452008B4B53 /* PlaylistDetailsViewController.swift */; };
 		E30CAE0126B7F47D008B4B53 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30CAE0026B7F47D008B4B53 /* UserDetailsViewController.swift */; };
+		E31BA04426C8F4C3008EA1D7 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31BA04326C8F4C3008EA1D7 /* LaunchScreenViewController.swift */; };
 		E33EEFB326B93A1700D0C600 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFB226B93A1700D0C600 /* APIRequest.swift */; };
 		E33EEFB526B9424400D0C600 /* SpotifyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFB426B9424400D0C600 /* SpotifyService.swift */; };
 		E33EEFB826B96DBC00D0C600 /* SpotifyTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33EEFB726B96DBC00D0C600 /* SpotifyTokens.swift */; };
@@ -77,6 +78,7 @@
 		E30CADFC26B7F36A008B4B53 /* PublicPlaylistsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPlaylistsCollectionViewController.swift; sourceTree = "<group>"; };
 		E30CADFE26B7F452008B4B53 /* PlaylistDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailsViewController.swift; sourceTree = "<group>"; };
 		E30CAE0026B7F47D008B4B53 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
+		E31BA04326C8F4C3008EA1D7 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 		E33EEFB226B93A1700D0C600 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		E33EEFB426B9424400D0C600 /* SpotifyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyService.swift; sourceTree = "<group>"; };
 		E33EEFB726B96DBC00D0C600 /* SpotifyTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyTokens.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				E30CADFE26B7F452008B4B53 /* PlaylistDetailsViewController.swift */,
 				E30CAE0026B7F47D008B4B53 /* UserDetailsViewController.swift */,
 				E3763F8026C6FAF900510C1D /* PlaylistsCollectionViewController.swift */,
+				E31BA04326C8F4C3008EA1D7 /* LaunchScreenViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				E33EEFCC26BB334A00D0C600 /* SpotifyPagingObject.swift in Sources */,
 				E3AB622E26C5DC7C00AC5682 /* SpotifyPlaylistCollectionViewCell.swift in Sources */,
 				E33EEFCA26BB298100D0C600 /* Playlist.swift in Sources */,
+				E31BA04426C8F4C3008EA1D7 /* LaunchScreenViewController.swift in Sources */,
 				E33EEFC826BAD0EE00D0C600 /* UICollectionViewDiffableDataSource+ViewModel.swift in Sources */,
 				E30CAE0126B7F47D008B4B53 /* UserDetailsViewController.swift in Sources */,
 				E30CADCC26B7E1A3008B4B53 /* SceneDelegate.swift in Sources */,

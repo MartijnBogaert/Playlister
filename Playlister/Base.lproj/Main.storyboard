@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZSC-jx-zSb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="20S-nc-1xO">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -551,8 +552,9 @@
         <!--Tab Bar Controller-->
         <scene sceneID="W2X-ov-UUL">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZSC-jx-zSb" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="RootController" automaticallyAdjustsScrollViewInsets="NO" id="ZSC-jx-zSb" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Oy8-QF-mq1"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RjL-Z6-lLE">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -567,17 +569,64 @@
             </objects>
             <point key="canvasLocation" x="-2897.1014492753625" y="-316.07142857142856"/>
         </scene>
+        <!--Launch Screen View Controller-->
+        <scene sceneID="udh-Mq-P9e">
+            <objects>
+                <viewController id="20S-nc-1xO" customClass="LaunchScreenViewController" customModule="Playlister" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="M8c-JU-hWo">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7Wl-pg-JEO">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIconOutline" translatesAutoresizingMaskIntoConstraints="NO" id="ZBI-av-bH8">
+                                <rect key="frame" x="145" y="372" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="3zk-nm-Hfk"/>
+                                    <constraint firstAttribute="width" constant="100" id="J1j-nl-LdK"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="oPM-Fu-oqa">
+                                <rect key="frame" x="176.66666666666666" y="472" width="37" height="338"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="JfS-mw-ayd"/>
+                        <color key="backgroundColor" name="AccentColor"/>
+                        <constraints>
+                            <constraint firstItem="ZBI-av-bH8" firstAttribute="centerX" secondItem="M8c-JU-hWo" secondAttribute="centerX" id="2aJ-DI-hLn"/>
+                            <constraint firstItem="ZBI-av-bH8" firstAttribute="centerY" secondItem="M8c-JU-hWo" secondAttribute="centerY" id="Dz2-Rq-hzs"/>
+                            <constraint firstItem="oPM-Fu-oqa" firstAttribute="centerX" secondItem="M8c-JU-hWo" secondAttribute="centerX" id="JCa-qO-Qc3"/>
+                            <constraint firstItem="7Wl-pg-JEO" firstAttribute="leading" secondItem="M8c-JU-hWo" secondAttribute="leading" id="JkD-XA-D4V"/>
+                            <constraint firstItem="JfS-mw-ayd" firstAttribute="bottom" secondItem="oPM-Fu-oqa" secondAttribute="bottom" id="MQu-qb-J1D"/>
+                            <constraint firstAttribute="bottom" secondItem="7Wl-pg-JEO" secondAttribute="bottom" id="PCI-us-xca"/>
+                            <constraint firstItem="oPM-Fu-oqa" firstAttribute="top" secondItem="ZBI-av-bH8" secondAttribute="bottom" id="cKZ-9j-GPs"/>
+                            <constraint firstAttribute="trailing" secondItem="7Wl-pg-JEO" secondAttribute="trailing" id="nwp-ny-VJS"/>
+                            <constraint firstItem="7Wl-pg-JEO" firstAttribute="top" secondItem="M8c-JU-hWo" secondAttribute="top" id="rTp-dm-hgA"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qcr-Ui-zLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3798" y="-316"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ILY-b5-H4d"/>
         <segue reference="IdR-TC-ltn"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="AppIconOutline" width="100" height="100"/>
         <image name="AppleMusicIcon" width="88" height="88"/>
+        <image name="LaunchScreenBackground" width="455.33334350585938" height="455.33334350585938"/>
         <image name="globe" catalog="system" width="128" height="121"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="person.circle" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <namedColor name="AccentColor">
+            <color red="0.98039215686274506" green="0.44313725490196076" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

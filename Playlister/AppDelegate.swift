@@ -16,31 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let urlCache = URLCache(memoryCapacity: 25_000_000, diskCapacity: 50_000_000, diskPath: temporaryDirectory)
         URLCache.shared = urlCache
         
-        // Refresh Spotify Access Token if necessary/possible
-        if let tokens = Storage.shared.spotifyTokens, !tokens.accessTokenIsValid {
-            SpotifyAccessTokenRequest(refreshToken: tokens.refreshToken).send { result in
-                if case .success(let response) = result {
-                    Storage.shared.spotifyTokens = SpotifyTokensStorage(
-                        accessToken: response.accessToken,
-                        refreshToken: tokens.refreshToken,
-                        accessTokenExpiresIn: response.accessTokenExpiresIn
-                    )
-                } else {
-                    Storage.shared.removeByKey(Storage.Keys.spotifyTokens)
-                }
-            }
-        }
-        
-        // Regenerate Apple Developer Token if necessary
-        if Storage.shared.appleDeveloperToken == nil || !Storage.shared.appleDeveloperToken!.isValid {
-            Storage.shared.appleDeveloperToken = AppleToken.generateDeveloperToken()
-        }
-        
-        // Remove Apple Music User Token if invalid
-        if let appleMusicUserToken = Storage.shared.appleMusicUserToken, !appleMusicUserToken.isValid {
-            Storage.shared.removeByKey(Storage.Keys.appleMusicUserToken)
-        }
-        
         return true
     }
 
