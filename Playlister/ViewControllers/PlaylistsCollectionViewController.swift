@@ -187,42 +187,45 @@ class PlaylistsCollectionViewController: UICollectionViewController, SFSafariVie
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
-            
-            func createPlaylistActionFromId(_ playlistId: String) -> UIMenuElement {
-                return UIAction(title: "Open in Spotify", image: UIImage(systemName: "arrow.up.forward.app")) { _ in
-                    var urlComponents = URLComponents()
-                    urlComponents.scheme = "https"
-                    urlComponents.host = "open.spotify.com"
-                    urlComponents.path = "/playlist/\(playlistId)"
-                    
-                    if let url = urlComponents.url {
-                        let safariViewController = SFSafariViewController(url: url)
-                        safariViewController.delegate = self
-                        self.present(safariViewController, animated: true)
-                    }
-                }
-            }
-            
-            var menuElements = [UIMenuElement]()
-            
-            switch item {
-            case .savedPlaylist(let savedPlaylist):
-                let removeAction = UIAction(title: "Remove Playlist", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-                    self.removeSavedPlaylist(savedPlaylist)
-                    self.update()
-                }
+    func generateContextMenuElements(for indexPath: IndexPath) -> [UIMenuElement]? {
+        guard let item = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+        
+        func createPlaylistActionFromId(_ playlistId: String) -> UIMenuElement {
+            return UIAction(title: "Open in Spotify", image: UIImage(systemName: "arrow.up.forward.app")) { _ in
+                var urlComponents = URLComponents()
+                urlComponents.scheme = "https"
+                urlComponents.host = "open.spotify.com"
+                urlComponents.path = "/playlist/\(playlistId)"
                 
-                menuElements.append(createPlaylistActionFromId(savedPlaylist.spotifyId))
-                menuElements.append(removeAction)
-            case .spotifyPlaylist(let spotifyPlaylist):
-                menuElements.append(createPlaylistActionFromId(spotifyPlaylist.id))
+                if let url = urlComponents.url {
+                    let safariViewController = SFSafariViewController(url: url)
+                    safariViewController.delegate = self
+                    self.present(safariViewController, animated: true)
+                }
+            }
+        }
+        
+        var menuElements = [UIMenuElement]()
+        
+        switch item {
+        case .savedPlaylist(let savedPlaylist):
+            let removeAction = UIAction(title: "Remove Playlist", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                self.removeSavedPlaylist(savedPlaylist)
+                self.update()
             }
             
-            return UIMenu(children: menuElements)
+            menuElements.append(createPlaylistActionFromId(savedPlaylist.spotifyId))
+            menuElements.append(removeAction)
+        case .spotifyPlaylist(let spotifyPlaylist):
+            menuElements.append(createPlaylistActionFromId(spotifyPlaylist.id))
         }
+        
+        return menuElements
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let menuElements = self.generateContextMenuElements(for: indexPath) else { return nil }
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in UIMenu(children: menuElements) }
     }
     
     func removeSavedPlaylist(_ playlist: Playlist) { }

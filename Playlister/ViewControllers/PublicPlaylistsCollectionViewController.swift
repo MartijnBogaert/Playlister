@@ -32,10 +32,6 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
         super.update()
     }
     
-    override func removeSavedPlaylist(_ playlist: Playlist) {
-        Storage.shared.publicPlaylists.remove(playlist)
-    }
-    
     func addSpotifyPlaylist(fromId id: String) {
         if let spotifyTokens = Storage.shared.spotifyTokens, spotifyTokens.accessTokenIsValid {
             SpotifyPlaylistRequest(playlistId: id, accessToken: spotifyTokens.accessToken).send { result in
@@ -94,5 +90,29 @@ class PublicPlaylistsCollectionViewController: PlaylistsCollectionViewController
         case .spotifyPlaylist(let spotifyPlaylist):
             return PlaylistDetailsViewController(coder: coder, playlist: Playlist(spotifyPlaylist: spotifyPlaylist), coverURL: spotifyPlaylist.images.first?.url, storageSource: .publicPlaylists)
         }
+    }
+    
+    override func generateContextMenuElements(for indexPath: IndexPath) -> [UIMenuElement]? {
+        guard let item = self.dataSource.itemIdentifier(for: indexPath),
+              var menuElements = super.generateContextMenuElements(for: indexPath)
+        else { return nil }
+        
+        if case .spotifyPlaylist(let spotifyPlaylist) = item {
+            let removeAction = UIAction(title: "Remove Playlist", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                self.removeSpotifyPlaylist(spotifyPlaylist: spotifyPlaylist)
+                self.update()
+            }
+            menuElements.append(removeAction)
+        }
+        
+        return menuElements
+    }
+    
+    func removeSpotifyPlaylist(spotifyPlaylist: SpotifyPlaylist) {
+        Storage.shared.importedPlaylists.remove(spotifyPlaylist)
+    }
+    
+    override func removeSavedPlaylist(_ playlist: Playlist) {
+        Storage.shared.publicPlaylists.remove(playlist)
     }
 }
