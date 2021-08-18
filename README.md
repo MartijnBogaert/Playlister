@@ -30,4 +30,4 @@ Since not everyone has an Apple Music subscription, but connecting to Apple Musi
 
 ## TestFlight
 
-Playlister is currently under review for TestFlight's beta testing program. When the app gets approved, a public TestFlight link will be provided here. Until then, the only way to use the app is by downloading its source code and signing it through Xcode.
+Playlister can be downloaded and tested through TestFlight, using [this link](https://testflight.apple.com/join/UDE77YOh).
