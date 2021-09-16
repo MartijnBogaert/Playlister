@@ -143,6 +143,7 @@ struct SpotifyPlaylistTracksRequest: APIRequest {
     typealias Response = SpotifyPagingObject<SpotifyTrackContainer>
     
     var playlistId: String
+    var offset: Int
     var accessToken: String
     
     var host: String { "api.spotify.com" }
@@ -150,6 +151,7 @@ struct SpotifyPlaylistTracksRequest: APIRequest {
     var queryItems: [URLQueryItem]? {
         var queryItems: [URLQueryItem] = []
         
+        queryItems.append(URLQueryItem(name: "offset", value: String(offset)))
         queryItems.append(URLQueryItem(name: "market", value: "from_token"))
         queryItems.append(URLQueryItem(name: "fields", value: "next,items.track(id,name,artists(name))"))
         

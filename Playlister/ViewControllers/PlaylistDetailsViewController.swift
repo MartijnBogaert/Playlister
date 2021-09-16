@@ -69,26 +69,7 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
         playlist.tracks = storedPlaylist?.tracks ?? []
         
         if let token = Storage.shared.spotifyTokens?.accessToken {
-            SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, accessToken: token).send { result in
-                if case .success(let spotifyPagingObject) = result {
-                    let newTracks = spotifyPagingObject.items.reduce(into: [Track]()) { partial, spotifyTrackContainer in
-                        if let track = Track(spotifyTrack: spotifyTrackContainer.track) {
-                            if let storedPlaylist = storedPlaylist {
-                                if !storedPlaylist.tracks.contains(track) {
-                                    partial.append(track)
-                                }
-                            } else {
-                                partial.append(track)
-                            }
-                        }
-                    }
-                    self.playlist.tracks += newTracks
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            loadTracks(for: token, withIndex: 0, storedPlaylist: storedPlaylist)
         }
         
         if let data = storedPlaylist?.coverImageData {
@@ -102,6 +83,44 @@ class PlaylistDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         self.coverImageView.image = UIImage(data: data)
                     }
                 }
+            }
+        }
+    }
+    
+    private func loadTracks(for token: String, withIndex pagingIndex: Int, storedPlaylist: Playlist?) {
+        SpotifyPlaylistTracksRequest(playlistId: playlist.spotifyId, offset: pagingIndex, accessToken: token).send { result in
+            print("New call -- index \(pagingIndex)")
+            
+            if case .success(let spotifyPagingObject) = result {
+                print("Success -- index \(pagingIndex)")
+                
+                let newTracks = spotifyPagingObject.items.reduce(into: [Track]()) { partial, spotifyTrackContainer in
+                    if let track = Track(spotifyTrack: spotifyTrackContainer.track) {
+                        if let storedPlaylist = storedPlaylist {
+                            if !storedPlaylist.tracks.contains(track) {
+                                partial.append(track)
+                            }
+                        } else {
+                            partial.append(track)
+                        }
+                    }
+                }
+                self.playlist.tracks += newTracks
+                
+                if let urlString = spotifyPagingObject.URLNextPage,
+                   let url = URLComponents(string: urlString),
+                   let nextPagingIndexString = url.queryItems?.first(where: { $0.name == "offset" })?.value,
+                   let nextPagingIndex = Int(nextPagingIndexString) {
+                    self.loadTracks(for: token, withIndex: nextPagingIndex, storedPlaylist: storedPlaylist)
+                }
+            } else if case .failure(let error) = result {
+                print("Error -- index \(pagingIndex) -- \(error)")
+            } else {
+                print("Unknown error -- index \(pagingIndex)")
+            }
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
